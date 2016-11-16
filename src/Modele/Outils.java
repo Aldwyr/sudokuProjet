@@ -1,9 +1,12 @@
-package sample;
+package Modele;
+
+import Modele.Case;
+import Modele.Groupe;
 
 /**
  * Created by gregorygueux on 16/11/2016.
  */
-public class Tools
+public class Outils
 {
     public static void remplirTab(Groupe tab[])
     {
