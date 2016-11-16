@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.Objects;
+
 /**
  * Created by gregorygueux on 16/11/2016.
  */
@@ -35,24 +37,6 @@ public class Jeu
      */
 
 
-    private void remplirTab(Groupe tab[])
-    {
-        for (int i = 0; i < tab.length; ++i)
-        {
-            tab[i] = new Groupe();
-        }
-    }
-
-    private void remplirTab(Groupe tab[][])
-    {
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++i)
-            {
-                tab[i][j] = new Groupe();
-            }
-        }
-    }
 
     public Jeu(String str)
     {
@@ -64,13 +48,29 @@ public class Jeu
         tableauLignes = new Groupe[9];
         tableauColonnes = new Groupe[9];
         tableauCarres = new Groupe[3][3];
+        String tableauData[] = str.split(" "); // l'espace est le séparateur.
 
         // On remplis les tableaux.
-        remplirTab(tableauLignes);
-        remplirTab(tableauColonnes);
-        remplirTab(tableauCarres);
+        Tools.remplirTab(tableauLignes);
+        Tools.remplirTab(tableauColonnes);
+        Tools.remplirTab(tableauCarres);
 
-
+        for (int i = 0; i < tableauData.length; ++i)
+        {
+            Case cases;
+            if (Objects.equals(tableauData[i], "0"))
+            {
+                cases = new CaseNonBloquee();
+            } else
+            {
+                cases = new CaseBloquee(tableauData[i]);
+            }
+            int numeroLigne = i / 9;
+            int numeroColonne = i % 9;
+            tableauLignes[numeroLigne].add(cases);
+            tableauColonnes[numeroColonne].add(cases);
+            tableauCarres[numeroLigne / 3][numeroColonne / 3].add(cases);
+        }
     }
 
 }

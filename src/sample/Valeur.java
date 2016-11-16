@@ -7,6 +7,7 @@ package sample;
 
 public enum Valeur
 {
+    ZERO(0),
     UN (1),
     DEUX (2),
     TROIS(3),
@@ -17,8 +18,25 @@ public enum Valeur
     HUIT(8),
     NEUF(9);
 
+    private int s;
+
     Valeur(int s)
     {
+        this.s = s;
+    }
 
+    public static Valeur fromInt(int i) throws NullPointerException
+    {
+        for (Valeur valeurARetourner : Valeur.values())
+        {
+            if (valeurARetourner.toInt() == i)
+                return valeurARetourner;
+        }
+        return null;
+    }
+
+    public int toInt()
+    {
+        return this.s;
     }
 }
