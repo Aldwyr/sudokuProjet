@@ -20,13 +20,12 @@ public class Jeu extends Observable
 
         try
         {
-            str = FileReader.readFromFile("dataSudoku/stringSudoku.txt");
+            str = FileReader.readFromFile("../stringSudoku.txt");
         }
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
         }
-
     }
 
     public void init(String[] tableauStr)
