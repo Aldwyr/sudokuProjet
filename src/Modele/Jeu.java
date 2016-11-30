@@ -13,22 +13,20 @@ public class Jeu extends Observable
     private Groupe tableauLignes[];
     private Groupe tableauColonnes[];
     private Groupe tableauCarres[][];
-
+    private String[] str;
 
     public Jeu()
     {
-        //String str = "5 3 0 0 7 0 0 0 0 6 0 0 1 9 5 0 0 0 0 9 8 0 0 0 0 6 0 8 0 0 0 6 0 0 0 3 4 0 0 8 0 3 0 0 1 7 0 0 0 2 0 0 0 6 0 6 0 0 0 0 2 8 0 0 0 0 4 1 9 0 0 5 0 0 0 0 8 0 0 7 9";
 
         try
         {
-            FileReader.readFromFile("test");
+            str = FileReader.readFromFile("dataSudoku/stringSudoku.txt");
         }
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
         }
 
-        //init(str);
     }
 
     public void init(String[] tableauStr)
@@ -47,12 +45,12 @@ public class Jeu extends Observable
         for (int i = 0; i < tableauStr.length - 1; ++i)
         {
             Case cases;
-            if (Objects.equals(tableauStr[i+1], "0"))
+            if (Objects.equals(tableauStr[i + 1], "0"))
             {
                 cases = new CaseNonBloquee();
             } else
             {
-                cases = new CaseBloquee(tableauStr[i+1]);
+                cases = new CaseBloquee(tableauStr[i + 1]);
             }
             int numeroLigne = i / 9;
             int numeroColonne = i % 9;
@@ -64,6 +62,11 @@ public class Jeu extends Observable
         }
         setChanged();
         notifyObservers();
+    }
+
+    public String[] getStr()
+    {
+        return str;
     }
 
     public Groupe[] getValue()
