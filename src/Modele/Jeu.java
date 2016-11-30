@@ -13,11 +13,8 @@ public class Jeu extends Observable
     private Groupe tableauColonnes[];
     private Groupe tableauCarres[][];
 
-
     public Jeu()
     {
-        String str = "5 3 0 0 7 0 0 0 0 6 0 0 1 9 5 0 0 0 0 9 8 0 0 0 0 6 0 8 0 0 0 6 0 0 0 3 4 0 0 8 0 3 0 0 1 7 0 0 0 2 0 0 0 6 0 6 0 0 0 0 2 8 0 0 0 0 4 1 9 0 0 5 0 0 0 0 8 0 0 7 9";
-        init(str);
     }
 
     public void init(String str)
@@ -48,12 +45,14 @@ public class Jeu extends Observable
             this.tableauLignes[numeroLigne].add(cases);
             this.tableauColonnes[numeroColonne].add(cases);
             this.tableauCarres[numeroLigne / 3][numeroColonne / 3].add(cases);
+
         }
+        setChanged();
+        notifyObservers();
     }
 
-
-    public int getValue(int x, int y)
+    public Groupe[] getValue()
     {
-        return this.tableauLignes[x].getCaseValueFromLine(y);
+        return this.tableauLignes;
     }
 }

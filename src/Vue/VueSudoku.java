@@ -2,25 +2,29 @@ package Vue;/**
  * Created by Laeti on 16/11/2016.
  */
 
+import Modele.Groupe;
 import Modele.Jeu;
+
+import java.util.Observable;
+import java.util.Observer;
 import javafx.application.Application;
-import javafx.geometry.Insets;
+
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 
-import java.util.Observable;
-import java.util.Observer;
-
-public class VueSudoku extends Application implements Observer
+public class VueSudoku extends Application
 {
 
-    Jeu modeleJeu;
+    private Jeu modeleJeu;
 
     public static void main(String[] args) {
         launch(args);
@@ -31,49 +35,63 @@ public class VueSudoku extends Application implements Observer
     {
         this.modeleJeu = new Jeu();
 
-        System.out.println("test");
         BorderPane border = new BorderPane();
-        GridPane gridPane = new GridPane();
+        GridPane general = new GridPane();
+
+        Text valeur[];
+        valeur = new Text[81];
         int column = 0;
         int row = 0;
+        this.modeleJeu.addObserver(new Observer()
+                                   {
+                                       @Override
+                                       public void update(Observable o, Object arg)
+                                       {
+                                           int x = 0;
+                                           int y = 0;
+                                           Groupe matrice[] = modeleJeu.getValue();
+                                           for (int i = 0; i < 81; i++)
+                                           {
+                                               valeur[i].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
+                                               if (valeur[i].getText().compareTo("0") == 0)
+                                               {
+                                                   valeur[i].setText("");
+                                               }
+                                               if (y > 8)
+                                               {
+                                                   y = 0;
+                                                   x++;
+                                               }
+                                           }
 
+                                       }
+                                   }
+
+        );
         for (int i = 0; i < 81; ++i)
         {
 
-            final Text t = new Text(Integer.toString(this.modeleJeu.getValue(row, column)));
-            if ()
-                t.setWrappingWidth(40);
-            t.setFont(Font.font("Verdana", 20));
-            t.setTextAlignment(TextAlignment.CENTER);
-            gridPane.add(t, column++, row);
+            valeur[i] = new Text();
+
+            valeur[i].setWrappingWidth(40);
+            valeur[i].setFont(Font.font("Verdana", 20));
+            valeur[i].setTextAlignment(TextAlignment.CENTER);
+            general.add(valeur[i], column++, row);
             if (column > 8)
             {
                 column = 0;
                 row++;
             }
         }
-        gridPane.setGridLinesVisible(true);
 
-        border.setCenter(gridPane);
+        general.setGridLinesVisible(true);
+
+        border.setCenter(general);
         Scene scene = new Scene(border, Color.WHITE);
         primaryStage.setTitle("Sudoku");
         primaryStage.setScene(scene);
         primaryStage.show();
-        this.modeleJeu.addObserver(new Observer()
-        {
-            @Override
-            public void update(Observable o, Object arg)
-            {
-
-            }
-        });
-
-    }
-
-    @Override
-    public void update(Observable o, Object arg)
-    {
-
+        modeleJeu.init("5 3 0 0 7 0 0 0 0 6 0 0 1 9 5 0 0 0 0 9 8 0 0 0 0 6 0 8 0 0 0 6 0 0 0 3 4 0 0 8 0 3 0 0 1 7 0 0 0 2 0 0 0 6 0 6 0 0 0 0 2 8 0 0 0 0 4 1 9 0 0 5 0 0 0 0 8 0 0 7 9");
     }
 
 }
