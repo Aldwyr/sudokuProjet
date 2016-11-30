@@ -41,7 +41,7 @@ public class VueSudoku extends Application implements Observer
         {
 
             final Text t = new Text(Integer.toString(this.modeleJeu.getValue(row, column)));
-            if ()
+            //if ()
                 t.setWrappingWidth(40);
             t.setFont(Font.font("Verdana", 20));
             t.setTextAlignment(TextAlignment.CENTER);

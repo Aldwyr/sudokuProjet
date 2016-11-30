@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 public class FileReader
 {    
-    public FileReader(String path) 
+    public FileReader()
     {
         
     }
@@ -17,7 +17,7 @@ public class FileReader
     public static String[] readFromFile(String filename) throws FileNotFoundException
     {
         int nombreDeLigne = recupererNombreDeLigne(filename);
-        String[] tableauStringSudoku = new String[nombreDeLigne];
+        String[] tableauStringSudoku = new String[nombreDeLigne + 1];
         int index = 0;
 
         try
