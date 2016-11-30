@@ -46,7 +46,7 @@ public class Groupe
 
     public int getCaseValueFromLine(int y)
     {
-        this.getCases()[y].getValeur().toInt()
+        return this.getCases()[y].getValeur().toInt();
 
     }
 }

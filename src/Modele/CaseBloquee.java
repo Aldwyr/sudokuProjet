@@ -17,7 +17,7 @@ public class CaseBloquee extends Case
             System.out.println("Erreur lors de la récupération de la valeur.");
         }
         groupe = new Groupe[3];
-        Outils.remplirTab(groupe);
+        //Outils.remplirTab(groupe);
         conflit = false;
     }
 }

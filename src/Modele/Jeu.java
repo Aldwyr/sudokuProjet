@@ -12,31 +12,6 @@ public class Jeu extends Observable
     private Groupe tableauLignes[];
     private Groupe tableauColonnes[];
     private Groupe tableauCarres[][];
-    /*
-        tabL = new Groupe[9]
-        tabC = new Groupe[9] -> new Groupe();
-        talCarre = new Groupe[3][3]
-
-        String[] tabData =  data.sprit(" "); // séparateur
-
-        for (int i = 0; i <  tabData.length; ++i {
-            Case case;
-            if (tabData[i] == "0") {
-                case  = new CaseNonBloque();
-            }
-            else
-            {
-                case = new CaseBloque(tabData[i]);
-            }
-
-            int numL = i/9;
-            int numC = i%9;
-            tablL[numL].add(case);
-            tabC[numC].add(case);
-            tabCar[numL/3][numC/3].add(case);
-        }
-     */
-
 
 
     public Jeu()
@@ -76,4 +51,9 @@ public class Jeu extends Observable
         }
     }
 
+
+    public int getValue(int x, int y)
+    {
+        return this.tableauLignes[x].getCaseValueFromLine(y);
+    }
 }
