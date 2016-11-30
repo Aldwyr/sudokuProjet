@@ -7,9 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Created by gregorygueux on 30/11/2016.
- */
 public class FileReader
 {    
     public FileReader(String path) 
@@ -57,9 +54,7 @@ public class FileReader
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             
-            String line;
-            
-            while ((line = bufferedReader.readLine()) != null)
+            while ((bufferedReader.readLine()) != null)
             {
                 nombreDeLignes++;
             }
