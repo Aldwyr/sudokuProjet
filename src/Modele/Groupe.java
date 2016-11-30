@@ -33,4 +33,20 @@ public class Groupe
         }
         return false;
     }
+
+    public Case[] getCases()
+    {
+        return cases;
+    }
+
+    public void setCases(Case[] cases)
+    {
+        this.cases = cases;
+    }
+
+    public int getCaseValueFromLine(int y)
+    {
+        this.getCases()[y].getValeur().toInt()
+
+    }
 }
