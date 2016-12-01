@@ -42,6 +42,7 @@ public class VueSudoku extends Application
 
         Text valeur[];
         valeur = new Text[81];
+        final int tailleSudoku = modeleJeu.getTailleSudoku();
         int column = 0;
         int row = 0;
         this.modeleJeu.addObserver(new Observer()
@@ -52,14 +53,14 @@ public class VueSudoku extends Application
                                            int x = 0;
                                            int y = 0;
                                            Groupe matrice[] = modeleJeu.getValue();
-                                           for (int i = 0; i < 81; i++)
+                                           for (int i = 0; i < tailleSudoku * tailleSudoku; i++)
                                            {
                                                valeur[i].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                if (valeur[i].getText().compareTo("0") == 0)
                                                {
                                                    valeur[i].setText("");
                                                }
-                                               if (y > 8)
+                                               if (y > tailleSudoku - 1)
                                                {
                                                    y = 0;
                                                    x++;
@@ -70,7 +71,7 @@ public class VueSudoku extends Application
                                    }
 
         );
-        for (int i = 0; i < 81; ++i)
+        for (int i = 0; i < tailleSudoku * tailleSudoku; ++i)
         {
 
             valeur[i] = new Text();

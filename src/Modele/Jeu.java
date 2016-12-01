@@ -21,8 +21,9 @@ public class Jeu extends Observable
 
         try
         {
-            this.tailleSudoku = Integer.parseInt(str[0]);
             str = FileReader.readFromFile("../stringSudoku.txt");
+            this.tailleSudoku = Integer.parseInt(str[0]);
+
         }
         catch (FileNotFoundException e)
         {
