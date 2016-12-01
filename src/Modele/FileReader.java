@@ -17,7 +17,7 @@ public class FileReader
     public static String[] readFromFile(String filename) throws FileNotFoundException
     {
         int nombreDeLigne = recupererNombreDeLigne(filename);
-        String[] tableauStringSudoku = new String[nombreDeLigne + 1];
+        String[] tableauStringSudoku = new String[nombreDeLigne];
         int index = 0;
 
         try

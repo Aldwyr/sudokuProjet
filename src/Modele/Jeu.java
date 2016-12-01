@@ -14,12 +14,14 @@ public class Jeu extends Observable
     private Groupe tableauColonnes[];
     private Groupe tableauCarres[][];
     private String[] str;
+    private int tailleSudoku;
 
     public Jeu()
     {
 
         try
         {
+            this.tailleSudoku = Integer.parseInt(str[0]);
             str = FileReader.readFromFile("../stringSudoku.txt");
         }
         catch (FileNotFoundException e)
@@ -30,10 +32,9 @@ public class Jeu extends Observable
 
     public void init(String[] tableauStr)
     {
-        int tailleSudoku = Integer.parseInt(tableauStr[0]);
-        double racineCarre = Math.sqrt(tailleSudoku);
-        this.tableauLignes = new Groupe[tailleSudoku];
-        this.tableauColonnes = new Groupe[tailleSudoku];
+        double racineCarre = Math.sqrt(getTailleSudoku());
+        this.tableauLignes = new Groupe[getTailleSudoku()];
+        this.tableauColonnes = new Groupe[getTailleSudoku()];
         this.tableauCarres = new Groupe[(int) racineCarre][(int) racineCarre];
 
         // On remplis les tableaux.
@@ -43,24 +44,32 @@ public class Jeu extends Observable
 
         for (int i = 0; i < tableauStr.length - 1; ++i)
         {
-            Case cases;
-            if (Objects.equals(tableauStr[i + 1], "0"))
+            for (int j = 0; j < tableauStr.length - 1; j++)
             {
-                cases = new CaseNonBloquee();
-            } else
-            {
-                cases = new CaseBloquee(tableauStr[i + 1]);
-            }
-            int numeroLigne = i / 9;
-            int numeroColonne = i % 9;
+                Case cases;
+                if (Objects.equals(tableauStr[i + 1].substring(j, j + 1), "0"))
+                {
+                    cases = new CaseNonBloquee();
+                } else
+                {
+                    cases = new CaseBloquee(tableauStr[i + 1].substring(j, j + 1));
+                }
+                int numeroLigne = i;
+                int numeroColonne = j;
 
-            this.tableauLignes[numeroLigne].add(cases);
-            this.tableauColonnes[numeroColonne].add(cases);
-            this.tableauCarres[numeroLigne / 3][numeroColonne / 3].add(cases);
+                this.tableauLignes[numeroLigne].add(cases);
+                this.tableauColonnes[numeroColonne].add(cases);
+                this.tableauCarres[numeroLigne / 3][numeroColonne / 3].add(cases);
+            }
 
         }
         setChanged();
         notifyObservers();
+    }
+
+    public int getTailleSudoku()
+    {
+        return tailleSudoku;
     }
 
     public String[] getStr()

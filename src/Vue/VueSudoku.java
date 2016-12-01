@@ -7,6 +7,8 @@ import Modele.Jeu;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
+
 import javafx.application.Application;
 
 import javafx.event.EventHandler;
