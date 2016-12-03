@@ -8,6 +8,7 @@ public class Groupe
 
     private Case cases[];
 
+    //TODO: à changer.
     public Groupe()
     {
         cases = new Case[9];
@@ -44,6 +45,9 @@ public class Groupe
         this.cases = cases;
     }
 
+    //    public Case getCaseType(int y) {
+//
+//    }
     public int getCaseValueFromLine(int y)
     {
         return this.getCases()[y].getValeur().toInt();

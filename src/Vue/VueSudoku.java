@@ -5,6 +5,7 @@ package Vue;/**
 import Modele.Groupe;
 import Modele.Jeu;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
@@ -14,6 +15,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -40,8 +42,10 @@ public class VueSudoku extends Application
         BorderPane border = new BorderPane();
         GridPane general = new GridPane();
 
+//        ArrayList<Text> listbloquant;
+//        ArrayList<TextField> listNonBloquant;
         Text valeur[];
-        valeur = new Text[81];
+        valeur = new Text[81]; //TODO:a modiifer
         final int tailleSudoku = modeleJeu.getTailleSudoku();
         int column = 0;
         int row = 0;
@@ -53,6 +57,10 @@ public class VueSudoku extends Application
                                            int x = 0;
                                            int y = 0;
                                            Groupe matrice[] = modeleJeu.getValue();
+                                           int estBloque[];
+/*
+                                           estBloque = modeleJeu.
+*/
                                            for (int i = 0; i < tailleSudoku * tailleSudoku; i++)
                                            {
                                                valeur[i].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));

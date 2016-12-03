@@ -68,6 +68,23 @@ public class Jeu extends Observable
         notifyObservers();
     }
 
+    public Groupe[] getTableauLignes()
+    {
+        return tableauLignes;
+    }
+
+    /*
+        public int[] getTypeOfCase() {
+            Case newcase;
+            for (int i = 0; i < getTailleSudoku() * getTailleSudoku(); i++)
+            {
+                for (int j = 0; j < getTailleSudoku(); j++)
+                {
+                   newcase = getTableauLignes()[i].getCase(j);
+                }
+            }
+        }
+    */
     public int getTailleSudoku()
     {
         return tailleSudoku;
