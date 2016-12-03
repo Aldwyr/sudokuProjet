@@ -1,4 +1,4 @@
-package Modele;
+package modele;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,13 +9,25 @@ import java.io.InputStreamReader;
 
 public class FileReader
 {
-    public FileReader()
-    {
-
+	SudokuParameters sudokuParameters;
+	
+    public FileReader(String filename)
+    {    	
+    	try
+		{
+			readFromFile(filename);
+		} 
+    	catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
-    public static String[] readFromFile(String filename) throws FileNotFoundException
+    public void readFromFile(String filename) throws FileNotFoundException
     {
+    	SudokuParameters sudokuParameters = new SudokuParameters();
+    	
         int nombreDeLigne = recupererNombreDeLigne(filename);
         String[] tableauStringSudoku = new String[nombreDeLigne];
         int index = 0;
@@ -33,18 +45,22 @@ public class FileReader
                 tableauStringSudoku[index] = line;
                 index++;
             }
+            
             bufferedReader.close();
         }
         catch (Exception e)
         {
             System.out.println(e.toString());
         }
-
-        return tableauStringSudoku;
+        
+        sudokuParameters.setTableauStringSudoku(tableauStringSudoku);
+        sudokuParameters.setTailleSudoku(Integer.parseInt(tableauStringSudoku[0]));
+        
+        this.sudokuParameters = sudokuParameters;
 
     }
 
-    private static int recupererNombreDeLigne(String filename) throws FileNotFoundException
+    private int recupererNombreDeLigne(String filename) throws FileNotFoundException
     {
         int nombreDeLignes = 0;
 
@@ -67,4 +83,9 @@ public class FileReader
         }
         return 0;
     }
+    
+    public SudokuParameters getSudokuParameters()
+	{
+		return this.sudokuParameters;
+	}
 }

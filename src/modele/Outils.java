@@ -1,7 +1,7 @@
-package Modele;
+package modele;
 
-import Modele.Case;
-import Modele.Groupe;
+import modele.Case;
+import modele.Groupe;
 
 /**
  * Created by gregorygueux on 16/11/2016.

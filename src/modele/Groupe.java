@@ -1,4 +1,4 @@
-package Modele;
+package modele;
 
 /**
  * Created by gregorygueux on 16/11/2016.
@@ -7,11 +7,11 @@ public class Groupe
 {
 
     private Case cases[];
-
+    
     //TODO: à changer.
     public Groupe()
     {
-        cases = new Case[9];
+    	this.cases = new Case[9];
     }
 
     public void add(Case newCase)
@@ -24,7 +24,9 @@ public class Groupe
 
         newCase.setGroupe(this);
     }
-    public boolean estEnConflit(Case c) {
+    
+    public boolean estEnConflit(Case c) 
+    {
 //        boolean returnVal = false;
 
         for (Case c2 : cases)

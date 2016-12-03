@@ -1,4 +1,4 @@
-package Modele;
+package modele;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -53,7 +53,7 @@ public class FileWriterSudoku
 		String aRetourner = "";
 		int x = 0;
         int y = 0;
-		Groupe matrice[] = jeu.getValue();
+		Groupe matrice[] = jeu.getNombreDeLignes();
 		for (int i = 0; i < 81; i++)
         {
 			
