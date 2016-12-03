@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import modele.Jeu;
 
 public class VueMenu
@@ -51,12 +50,10 @@ public class VueMenu
 	    button = new Button[2];
 	    
 	    button[0] = new Button("Ouvrir un nouveau Sudoku");
-	    button[0].setId("0");
 	    createControleur(button[0]);
 	    vBox.getChildren().add(button[0]);
 	    
 	    button[1] = new Button("Ouvrir un sudoku déjà commencé");
-	    button[0].setId("1");
 	    createControleur(button[1]);
 	    vBox.getChildren().add(button[1]);
 	    
@@ -68,8 +65,6 @@ public class VueMenu
 		this.controleur = new ControleurAccueil(this.modeleJeu, this);
 		button.setOnAction(controleur);		
 	}
-	
-	
 	
 	public Button getBouton1()
 	{

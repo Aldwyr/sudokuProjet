@@ -1,14 +1,30 @@
 package controleur;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import modele.Jeu;
 import vue.VueSudoku;
 
-public class ControleurSudoku
+public class ControleurSudoku implements EventHandler<ActionEvent>
 {
 
+	private Jeu modeleJeu;
+	private VueSudoku vueSudoku;
+	
 	public ControleurSudoku(Jeu modeleJeu, VueSudoku vueSudoku)
 	{
-		// TODO Auto-generated constructor stub
+		this.modeleJeu = modeleJeu;
+		this.vueSudoku = vueSudoku;
 	}
+
+	@Override
+	public void handle(ActionEvent event)
+	{
+		// TODO: distinction entre les boutons cliqués
+		// TODO: remplir fonction  (appuie sur le bouton sauvegarder
+		System.out.println("A implémenter");
+	}
+	
+
 
 }

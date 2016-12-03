@@ -2,31 +2,24 @@ package vue;/**
  * Created by Laeti on 16/11/2016.
  */
 
-import java.awt.Button;
-import java.util.ArrayList;
+//import java.awt.Button;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Vector;
 
-import controleur.ControleurAccueil;
 import controleur.ControleurSudoku;
-import javafx.application.Application;
-
-import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.control.Button;
 import modele.Groupe;
 import modele.Jeu;
 import modele.SudokuParameters;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 public class VueSudoku
 {
@@ -85,11 +78,11 @@ public class VueSudoku
 	}
 
 	public Scene initialisationDeLaFenetre(Text[] valeur, SudokuParameters sudokuParameters)
-	{
-		
+	{		
 		BorderPane border = new BorderPane();
         GridPane general = new GridPane();
-        Button boutonParcourir = new Button("Parcourir...");
+        HBox hbox = new HBox();
+        Button boutonSauvegarder = new Button("Sauvegarder");
         
         int column = 0;
         int row = 0;
@@ -113,13 +106,24 @@ public class VueSudoku
         }
 
 		general.setGridLinesVisible(true);
-
+        
+        hbox.setAlignment(Pos.CENTER);
+        createControleur(boutonSauvegarder);
+        hbox.getChildren().add(boutonSauvegarder);
+        
         border.setCenter(general);
+        border.setBottom(hbox);
         
         Scene scene = new Scene(border, Color.WHITE);
         modeleJeu.init(modeleJeu.getStr());
         
         return scene;
+	}
+	
+	private void createControleur(Button button)
+	{
+		this.controleurSudoku = new ControleurSudoku(this.modeleJeu, this);
+		button.setOnAction(this.controleurSudoku);		
 	}
 	
 	public Scene getScene()
