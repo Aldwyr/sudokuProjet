@@ -31,7 +31,7 @@ public class ControleurAccueil implements EventHandler<ActionEvent>
 	
 	public void	handle(ActionEvent event) 
 	{
-		// On regarde sur quel bouton on a cliqué depuis l'accueil
+		// On regarde sur quel bouton on a cliquï¿½ depuis l'accueil
 		Button button = (Button) event.getSource();
 		
 		if (button == vueMenu.getBouton1())

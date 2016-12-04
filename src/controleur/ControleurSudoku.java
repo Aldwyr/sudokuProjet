@@ -10,7 +10,7 @@ public class ControleurSudoku implements EventHandler<ActionEvent>
 
 	private Jeu modeleJeu;
 	private VueSudoku vueSudoku;
-	
+
 	public ControleurSudoku(Jeu modeleJeu, VueSudoku vueSudoku)
 	{
 		this.modeleJeu = modeleJeu;
@@ -20,11 +20,11 @@ public class ControleurSudoku implements EventHandler<ActionEvent>
 	@Override
 	public void handle(ActionEvent event)
 	{
-		// TODO: distinction entre les boutons cliqués
+		// TODO: distinction entre les boutons cliquï¿½s
 		// TODO: remplir fonction  (appuie sur le bouton sauvegarder
-		System.out.println("A implémenter");
+		System.out.println("A implï¿½menter");
 	}
-	
+
 
 
 }

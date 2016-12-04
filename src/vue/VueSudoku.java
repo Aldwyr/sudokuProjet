@@ -35,7 +35,6 @@ public class VueSudoku
     {
         this.modeleJeu = modeleJeu;
 
-
         this.sudokuParameters = modeleJeu.getSudokuParameters();
         int tailleSudoku = sudokuParameters.getTailleSudoku();
 
@@ -76,8 +75,6 @@ public class VueSudoku
                                        }
                                    }
         );
-
-
         scene = initialisationDeLaFenetre(valeur, sudokuParameters);
     }
 
