@@ -7,11 +7,11 @@ public class Groupe
 {
 
     private Case cases[];
-    
+
     //TODO: à changer.
     public Groupe()
     {
-    	this.cases = new Case[9];
+        this.cases = new Case[9];
     }
 
     public void add(Case newCase)
@@ -24,8 +24,8 @@ public class Groupe
 
         newCase.setGroupe(this);
     }
-    
-    public boolean estEnConflit(Case c) 
+
+    public boolean estEnConflit(Case c)
     {
 //        boolean returnVal = false;
 
@@ -47,9 +47,14 @@ public class Groupe
         this.cases = cases;
     }
 
-    //    public Case getCaseType(int y) {
-//
-//    }
+    public int getTypeDeCase(int y)
+    {
+        if (this.cases[y] instanceof CaseNonBloquee)
+            return 1;
+        else
+            return 2;
+    }
+
     public int getCaseValueFromLine(int y)
     {
         return this.getCases()[y].getValeur().toInt();

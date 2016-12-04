@@ -3,12 +3,14 @@ package vue;/**
  */
 
 //import java.awt.Button;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import controleur.ControleurSudoku;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -28,76 +30,79 @@ public class VueSudoku
     private ControleurSudoku controleurSudoku;
     private Scene scene;
     private SudokuParameters sudokuParameters;
-    
+
     public VueSudoku(Jeu modeleJeu)
-	{    	
-    	this.modeleJeu = modeleJeu;
+    {
+        this.modeleJeu = modeleJeu;
 
-//      ArrayList<Text> listbloquant;
-//      ArrayList<TextField> listNonBloquant;
-      
-      this.sudokuParameters = modeleJeu.getSudokuParameters();
-      int tailleSudoku = sudokuParameters.getTailleSudoku();
-      
-      Text valeur[];
-      valeur = new Text[tailleSudoku*tailleSudoku]; //Si sudoku de taille 9, il y a 81 case Text
-      
-      this.modeleJeu.addObserver(new Observer()
-                                 {
-                                     @Override
-                                     public void update(Observable o, Object arg)
-                                     {
-                                         int x = 0;
-                                         int y = 0;
-                                         Groupe matrice[] = modeleJeu.getNombreDeLignes();
-                                         //int estBloque[];
-/*
-                                         estBloque = modeleJeu.
-*/
-                                         
-                                         for (int i = 0; i < tailleSudoku * tailleSudoku; i++)
-                                         {
-                                             valeur[i].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
-                                             if (valeur[i].getText().compareTo("0") == 0)
-                                             {
-                                                 valeur[i].setText("");
-                                             }
-                                             if (y > tailleSudoku - 1)
-                                             {
-                                                 y = 0;
-                                                 x++;
-                                             }
-                                         }
 
-                                     }
-                                 }
-      );
-      
-      
-      scene = initialisationDeLaFenetre(valeur, sudokuParameters);
-	}
+        this.sudokuParameters = modeleJeu.getSudokuParameters();
+        int tailleSudoku = sudokuParameters.getTailleSudoku();
 
-	public Scene initialisationDeLaFenetre(Text[] valeur, SudokuParameters sudokuParameters)
-	{		
-		BorderPane border = new BorderPane();
+        TextField valeur[][];
+        valeur = new TextField[tailleSudoku][tailleSudoku]; //Si sudoku de taille 9, il y a 81 case Text
+        final int[][][] estBloque = new int[1][1][1];
+
+        this.modeleJeu.addObserver(new Observer()
+                                   {
+                                       @Override
+                                       public void update(Observable o, Object arg)
+                                       {
+                                           int x = 0;
+                                           int y = 0;
+                                           Groupe matrice[] = modeleJeu.getNombreDeLignes();
+
+                                           estBloque[0] = modeleJeu.recupTouteLesTypesDesCases();
+
+                                           for (int i = 0; i < tailleSudoku; i++)
+                                           {
+                                               for (int j = 0; j < tailleSudoku; j++) {
+                                                   // Si la case est de type nonBloqué, alors on remplie le tableau
+                                                   if (estBloque[0][i][j] == 1){
+                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
+                                                        if (valeur[i][j].getText().compareTo("0") == 0)
+                                                           valeur[i][j].setText("");
+                                                   } else {
+                                                       valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
+                                                       valeur[i][j].setEditable(false);
+                                                   }
+                                               }
+                                               if (y > tailleSudoku - 1)
+                                               {
+                                                   y = 0;
+                                                   x++;
+                                               }
+                                           }
+                                       }
+                                   }
+        );
+
+
+        scene = initialisationDeLaFenetre(valeur, sudokuParameters);
+    }
+
+    public Scene initialisationDeLaFenetre(TextField[][] valeur, SudokuParameters sudokuParameters)
+    {
+        BorderPane border = new BorderPane();
         GridPane general = new GridPane();
         HBox hbox = new HBox();
         Button boutonSauvegarder = new Button("Sauvegarder");
-        
+
         int column = 0;
         int row = 0;
-        
-		for (int i = 0; i < sudokuParameters.getTailleSudoku() * sudokuParameters.getTailleSudoku(); ++i)
-        {
-	        
-            valeur[i] = new Text();
 
-            valeur[i].setWrappingWidth(40);
-            valeur[i].setFont(Font.font("Verdana", 20));
-            valeur[i].setTextAlignment(TextAlignment.CENTER);
-            
-            general.add(valeur[i], column++, row);
-            
+        for (int i = 0; i < sudokuParameters.getTailleSudoku(); ++i)
+        {
+            for (int j = 0; j < sudokuParameters.getTailleSudoku(); j++) {
+                valeur[i][j] = new TextField("0");
+
+                valeur[i][j].setMaxWidth(40);
+                valeur[i][j].setFont(Font.font("Verdana", 20));
+//                valeur[i][j].setTextAlignment(TextAlignment.CENTER);
+
+                general.add(valeur[i][j], column++, row);
+            }
+
             if (column >= sudokuParameters.getTailleSudoku())
             {
                 column = 0;
@@ -105,31 +110,31 @@ public class VueSudoku
             }
         }
 
-		general.setGridLinesVisible(true);
-        
+        general.setGridLinesVisible(true);
+
         hbox.setAlignment(Pos.CENTER);
         createControleur(boutonSauvegarder);
         hbox.getChildren().add(boutonSauvegarder);
-        
+
         border.setCenter(general);
         border.setBottom(hbox);
-        
+
         Scene scene = new Scene(border, Color.WHITE);
         modeleJeu.init(modeleJeu.getStr());
-        
+
         return scene;
-	}
-	
-	private void createControleur(Button button)
-	{
-		this.controleurSudoku = new ControleurSudoku(this.modeleJeu, this);
-		button.setOnAction(this.controleurSudoku);		
-	}
-	
-	public Scene getScene()
-	{
-		return scene;
-	}
-	
+    }
+
+    private void createControleur(Button button)
+    {
+        this.controleurSudoku = new ControleurSudoku(this.modeleJeu, this);
+        button.setOnAction(this.controleurSudoku);
+    }
+
+    public Scene getScene()
+    {
+        return scene;
+    }
+
 
 }
