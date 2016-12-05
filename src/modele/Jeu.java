@@ -15,10 +15,11 @@ public class Jeu extends Observable
     private Groupe tableauGroupeLignes[];
     private Groupe tableauGroupeColonnes[];
     private Groupe tableauGroupeCarres[][];
-    private String[] str;
+    private String[] strSudokuVide;
+    private String[] strSudokuRempli;
     private int tailleSudoku;
     private SudokuParameters sudokuParameters;
-
+    
     public Jeu()
     {
     	
@@ -26,19 +27,34 @@ public class Jeu extends Observable
     
     public void creerNouveauSudoku(String path)
 	{
-    	FileReader fileReader = new FileReader(path); // TODO: r�cuperer path choisi par l'utilisateur
+    	FileReader fileReader = new FileReader(path);
     	this.sudokuParameters = fileReader.getSudokuParameters();    	
     	
         // on recup�re le tableau de string contenant les lignes du sudoku et la taille du sudoku
-        this.str = this.sudokuParameters.getTableauStringSudoku();
+        this.strSudokuVide = this.sudokuParameters.getTableauStringSudokuVide();
 		this.tailleSudoku = this.sudokuParameters.getTailleSudoku();
 		
 	}
+    
+    public void chargerSudokuCommence(String path)
+    {
+    	FileReaderStartedSudoku fileReaderStartedSudoku = new FileReaderStartedSudoku(path);
+    	
+    	this.sudokuParameters = fileReaderStartedSudoku.getSudokuParameters(); 
+    	this.tailleSudoku = this.sudokuParameters.getTailleSudoku();
+    	this.strSudokuVide = this.sudokuParameters.getTableauStringSudokuVide();
+    	this.strSudokuRempli = this.sudokuParameters.getTableauStringSudokuRempli();
+    	
+    	for (int i = 0; i < this.strSudokuVide.length; i++)
+    	{
+    		
+    	}
+    	
+    }
 
     public void init(String[] tableauStr)
     {
         double racineCarre = Math.sqrt(this.tailleSudoku);
-        System.out.println(this.tailleSudoku);
         this.tableauGroupeLignes = new Groupe[this.tailleSudoku];
         this.tableauGroupeColonnes = new Groupe[this.tailleSudoku];
         this.tableauGroupeCarres = new Groupe[(int) racineCarre][(int) racineCarre];
@@ -47,18 +63,22 @@ public class Jeu extends Observable
         Outils.remplirTab(this.tableauGroupeLignes);
         Outils.remplirTab(this.tableauGroupeColonnes);
         Outils.remplirTab(this.tableauGroupeCarres);
-
-        for (int i = 0; i < tableauStr.length - 1; ++i)
+        
+    	for (int i = 0; i < tableauStr.length - 1; ++i)
         {
             for (int j = 0; j < tableauStr.length - 1; j++)
             {
                 Case cases;
-                if (Objects.equals(tableauStr[i + 1].substring(j, j + 1), "0"))
+                //System.out.println(tableauStr.length-1);
+                String emplacementCase = tableauStr[i + 1].substring(j, j + 1);
+                
+                if (Objects.equals(emplacementCase, "0"))
                 {
                     cases = new CaseNonBloquee();
-                } else
+                } 
+                else
                 {
-                    cases = new CaseBloquee(tableauStr[i + 1].substring(j, j + 1));
+                    cases = new CaseBloquee(emplacementCase);
                 }
                 this.tableauGroupeLignes[i].add(cases);
                 this.tableauGroupeColonnes[j].add(cases);
@@ -66,6 +86,7 @@ public class Jeu extends Observable
             }
 
         }
+        
         setChanged();
         notifyObservers();
     }
@@ -76,15 +97,17 @@ public class Jeu extends Observable
     }
 
 
-        public int[][] recupTouteLesTypesDesCases()
-        {
-            int typeDesCases[][] =  new int[getTailleSudoku()][getTailleSudoku()];
+    public int[][] recupTouteLesTypesDesCases()
+    {
+        int typeDesCases[][] =  new int[getTailleSudoku()][getTailleSudoku()];
 
-            for (int i = 0; i < getTailleSudoku(); i++)
-                for (int j = 0; j < getTailleSudoku(); j++)
-                    typeDesCases[i][j] = getTableauLignes()[i].getTypeDeCase(j);
-            return typeDesCases;
-        }
+        for (int i = 0; i < getTailleSudoku(); i++)
+            for (int j = 0; j < getTailleSudoku(); j++)
+                typeDesCases[i][j] = getTableauLignes()[i].getTypeDeCase(j);
+        
+        return typeDesCases;
+    }
+        
     public int getTailleSudoku()
     {
         return tailleSudoku;
@@ -92,7 +115,7 @@ public class Jeu extends Observable
 
     public String[] getStr()
     {
-        return str;
+        return this.strSudokuVide;
     }
 
     public Groupe[] getNombreDeLignes()

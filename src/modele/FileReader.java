@@ -9,13 +9,13 @@ import java.io.InputStreamReader;
 
 public class FileReader
 {
-	SudokuParameters sudokuParameters;
+	private SudokuParameters sudokuParameters;
 	
     public FileReader(String filename)
     {    	
     	try
 		{
-			readFromFile(filename);
+			readFromFileDejaCommence(filename);
 		} 
     	catch (FileNotFoundException e)
 		{
@@ -24,8 +24,9 @@ public class FileReader
 		}
     }
 
-    public void readFromFile(String filename) throws FileNotFoundException
+    public void readFromFileDejaCommence(String filename) throws FileNotFoundException
     {
+    	System.out.println("test");
     	SudokuParameters sudokuParameters = new SudokuParameters();
     	
         int nombreDeLigne = recupererNombreDeLigne(filename);
@@ -53,14 +54,14 @@ public class FileReader
             System.out.println(e.toString());
         }
         
-        sudokuParameters.setTableauStringSudoku(tableauStringSudoku);
+        sudokuParameters.setTableauStringSudokuVide(tableauStringSudoku);
         sudokuParameters.setTailleSudoku(Integer.parseInt(tableauStringSudoku[0]));
         
         this.sudokuParameters = sudokuParameters;
 
     }
 
-    private int recupererNombreDeLigne(String filename) throws FileNotFoundException
+    protected int recupererNombreDeLigne(String filename) throws FileNotFoundException
     {
         int nombreDeLignes = 0;
 

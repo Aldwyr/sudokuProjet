@@ -49,7 +49,16 @@ public class ControleurAccueil implements EventHandler<ActionEvent>
 		}
         else if (button == vueMenu.getBouton2())
 		{
-        	
+        	this.file = this.vueMenu.ouvrirGestionnaireFichier();
+			this.modeleJeu.chargerSudokuCommence(file.getAbsolutePath());
+			
+			this.vueSudoku = new VueSudoku(this.modeleJeu);
+			ControleurSudoku controleurSudoku = new ControleurSudoku(this.modeleJeu, vueSudoku);
+			
+			Stage stage = new Stage();
+			stage.setTitle("Sudoku commencé");
+	        stage.setScene(vueSudoku.getScene());
+	        stage.show();
 		}
 	}
 }

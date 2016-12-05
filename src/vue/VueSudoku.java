@@ -57,11 +57,14 @@ public class VueSudoku
                                            {
                                                for (int j = 0; j < tailleSudoku; j++) {
                                                    // Si la case est de type nonBloqué, alors on remplie le tableau
-                                                   if (estBloque[0][i][j] == 1){
+                                                   if (estBloque[0][i][j] == 1)
+                                                   {
                                                         valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                         if (valeur[i][j].getText().compareTo("0") == 0)
                                                            valeur[i][j].setText("");
-                                                   } else {
+                                                   } 
+                                                   else 
+                                                   {
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                        valeur[i][j].setEditable(false);
                                                    }
@@ -84,14 +87,34 @@ public class VueSudoku
         GridPane general = new GridPane();
         HBox hbox = new HBox();
         Button boutonSauvegarder = new Button("Sauvegarder");
+        String[] sudokuRempli = null;
 
         int column = 0;
         int row = 0;
+        
+        System.out.println(sudokuParameters.getTableauStringSudokuRempli()[0]);
+        
+        if (sudokuParameters.getTableauStringSudokuRempli() != null)
+        	sudokuRempli = sudokuParameters.getTableauStringSudokuRempli();
 
         for (int i = 0; i < sudokuParameters.getTailleSudoku(); ++i)
         {
-            for (int j = 0; j < sudokuParameters.getTailleSudoku(); j++) {
+            for (int j = 0; j < sudokuParameters.getTailleSudoku(); j++) 
+            {
                 valeur[i][j] = new TextField("0");
+                
+                if (sudokuParameters.getTableauStringSudokuRempli() != null)
+                {
+                	String caractereAMettreDansLaCase;
+                	
+                	System.out.println(String.valueOf(sudokuRempli[i]));
+                	caractereAMettreDansLaCase= String.valueOf(sudokuRempli[i].charAt(j));
+                	
+                	
+                	if (caractereAMettreDansLaCase != "0")
+                		valeur[i][j].setText(caractereAMettreDansLaCase);
+                }
+                
 
                 valeur[i][j].setMaxWidth(40);
                 valeur[i][j].setFont(Font.font("Verdana", 20));
@@ -118,11 +141,17 @@ public class VueSudoku
 
         Scene scene = new Scene(border, Color.WHITE);
         modeleJeu.init(modeleJeu.getStr());
-
+        
         return scene;
     }
 
-    private void createControleur(Button button)
+    private String recupererValeurRentreePrecedemment()
+	{
+		
+		return null;
+	}
+
+	private void createControleur(Button button)
     {
         this.controleurSudoku = new ControleurSudoku(this.modeleJeu, this);
         button.setOnAction(this.controleurSudoku);

@@ -3,7 +3,8 @@ package modele;
 public class SudokuParameters
 {
 	int tailleSudoku;
-	String[] tableauStringSudoku;
+	String[] tableauStringSudokuVide;
+	String[] tableauStringSudokuRempli;
 	
 	public SudokuParameters()
 	{
@@ -20,14 +21,24 @@ public class SudokuParameters
 		this.tailleSudoku = tailleSudoku;
 	}
 	
-	public String[] getTableauStringSudoku()
+	public String[] getTableauStringSudokuVide()
 	{
-		return this.tableauStringSudoku;
+		return this.tableauStringSudokuVide;
 	}
 	
-	public void setTableauStringSudoku(String[] tableauStringSudoku)
+	public void setTableauStringSudokuVide(String[] tableauStringSudoku)
 	{
-		this.tableauStringSudoku = tableauStringSudoku;
+		this.tableauStringSudokuVide = tableauStringSudoku;
+	}
+	
+	public String[] getTableauStringSudokuRempli()
+	{
+		return this.tableauStringSudokuRempli;
+	}
+	
+	public void setTableauStringSudokuRempli(String[] tableauStringSudokuRempli)
+	{
+		this.tableauStringSudokuRempli = tableauStringSudokuRempli;
 	}
 
 }
