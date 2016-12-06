@@ -149,43 +149,44 @@ public class VueSudoku
         return scene;
     }
 
-	private HBox creerHboxTop()
+	private HBox creerHboxTop() 
 	{
 		HBox hbox = new HBox();
 		Label labelInfos = new Label();
 		Button boutonVerifier = new Button("Vérifier grille");
-
+		
 		hbox.setAlignment(Pos.CENTER);
 		labelInfos.setText("test");
-
+		
         hbox.getChildren().add(labelInfos);
-
+        
         createControleur(boutonVerifier);
         hbox.getChildren().add(boutonVerifier);
-
+        
         return hbox;
 	}
 
-	private HBox creerHboxBottom()
+	private HBox creerHboxBottom() 
 	{
 		HBox hbox = new HBox();
 		Button boutonResoudre = new Button("Résoudre");
 		Button boutonSauvegarder = new Button("Sauvegarder");
 		Button boutonAbandonner = new Button("Abandonner");
-
+		
 		hbox.setAlignment(Pos.CENTER);
+		hbox.setSpacing(20);
 
 		createControleur(boutonResoudre);
         hbox.getChildren().add(boutonResoudre);
-
+        
         createControleur(boutonSauvegarder);
         hbox.getChildren().add(boutonSauvegarder);
-
+        
         createControleur(boutonAbandonner);
         hbox.getChildren().add(boutonAbandonner);
-
-        return hbox;
-    }
+        
+		return hbox;
+	}
 
     private void ajoutControlleur(TextField valeur, final int posx, final int posy)
     {
