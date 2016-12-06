@@ -91,6 +91,13 @@ public class Jeu extends Observable
         notifyObservers();
     }
 
+    public void changeValeurCase(int newValeur, int posx, int posY)
+    {
+        this.tableauGroupeLignes[posx].getCases()[posY].MAJ(Valeur.fromInt(newValeur));
+        setChanged();
+        notifyObservers();
+    }
+
     public Groupe[] getTableauLignes()
     {
         return tableauGroupeLignes;

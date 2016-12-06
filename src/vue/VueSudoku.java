@@ -8,9 +8,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import controleur.ControleurSudoku;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -59,12 +62,14 @@ public class VueSudoku
                                                    // Si la case est de type nonBloqué, alors on remplie le tableau
                                                    if (estBloque[0][i][j] == 1)
                                                    {
-                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
-                                                        if (valeur[i][j].getText().compareTo("0") == 0)
+                                                       valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
+                                                       if (valeur[i][j].getText().compareTo("0") == 0)
                                                            valeur[i][j].setText("");
-                                                   } 
-                                                   else 
+                                                       ajoutControlleur(valeur[i][j], i, j);
+                                                   } else
                                                    {
+
+                                                       valeur[i][j].setStyle("-fx-background-color: lightgrey;");
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                        valeur[i][j].setEditable(false);
                                                    }
@@ -78,6 +83,7 @@ public class VueSudoku
                                        }
                                    }
         );
+
         scene = initialisationDeLaFenetre(valeur, sudokuParameters);
     }
 
@@ -91,34 +97,33 @@ public class VueSudoku
 
         int column = 0;
         int row = 0;
-        
-        System.out.println(sudokuParameters.getTableauStringSudokuRempli()[0]);
-        
+
+//        System.out.println(sudokuParameters.getTableauStringSudokuRempli()[0]);
+
         if (sudokuParameters.getTableauStringSudokuRempli() != null)
-        	sudokuRempli = sudokuParameters.getTableauStringSudokuRempli();
+            sudokuRempli = sudokuParameters.getTableauStringSudokuRempli();
 
         for (int i = 0; i < sudokuParameters.getTailleSudoku(); ++i)
         {
-            for (int j = 0; j < sudokuParameters.getTailleSudoku(); j++) 
+            for (int j = 0; j < sudokuParameters.getTailleSudoku(); j++)
             {
                 valeur[i][j] = new TextField("0");
-                
+
                 if (sudokuParameters.getTableauStringSudokuRempli() != null)
                 {
-                	String caractereAMettreDansLaCase;
-                	
-                	System.out.println(String.valueOf(sudokuRempli[i]));
-                	caractereAMettreDansLaCase= String.valueOf(sudokuRempli[i].charAt(j));
-                	
-                	
-                	if (caractereAMettreDansLaCase != "0")
-                		valeur[i][j].setText(caractereAMettreDansLaCase);
+                    String caractereAMettreDansLaCase;
+
+                    System.out.println(String.valueOf(sudokuRempli[i]));
+                    caractereAMettreDansLaCase = String.valueOf(sudokuRempli[i].charAt(j));
+
+
+                    if (caractereAMettreDansLaCase != "0")
+                        valeur[i][j].setText(caractereAMettreDansLaCase);
                 }
-                
+
 
                 valeur[i][j].setMaxWidth(40);
                 valeur[i][j].setFont(Font.font("Verdana", 20));
-//                valeur[i][j].setTextAlignment(TextAlignment.CENTER);
 
                 general.add(valeur[i][j], column++, row);
             }
@@ -141,17 +146,43 @@ public class VueSudoku
 
         Scene scene = new Scene(border, Color.WHITE);
         modeleJeu.init(modeleJeu.getStr());
-        
+
         return scene;
     }
 
+    private void ajoutControlleur(TextField valeur, final int posx, final int posy)
+    {
+        valeur.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                int number = 0;
+                try
+                {
+                    number = Integer.parseInt(valeur.getText());
+                }
+                catch (NumberFormatException e)
+                {
+                    valeur.setText("");
+                }
+                if (number > sudokuParameters.getTailleSudoku() || number < 1)
+                {
+                    valeur.setText("");
+                } else
+                {
+                    modeleJeu.changeValeurCase(number, posx, posy);
+                }
+            }
+        });
+    }
     private String recupererValeurRentreePrecedemment()
-	{
-		
-		return null;
-	}
+    {
 
-	private void createControleur(Button button)
+        return null;
+    }
+
+    private void createControleur(Button button)
     {
         this.controleurSudoku = new ControleurSudoku(this.modeleJeu, this);
         button.setOnAction(this.controleurSudoku);

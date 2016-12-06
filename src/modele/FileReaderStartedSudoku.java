@@ -26,7 +26,7 @@ public class FileReaderStartedSudoku
 	}
 	
 	
-	// On change la fonction de la superclasse en ajoutant la lecture de la deuxième partie du fichier texte
+	// On change la fonction de la superclasse en ajoutant la lecture de la deuxiï¿½me partie du fichier texte
 	public void readFromFileDejaCommence(String filename) throws FileNotFoundException
     {
     	SudokuParameters sudokuParameters = new SudokuParameters();
@@ -65,7 +65,7 @@ public class FileReaderStartedSudoku
             	}
             	else
             	{
-            		//On passe à la prochaine ligne si on est sur le saut de ligne séparant les 2 sudokus
+            		//On passe ï¿½ la prochaine ligne si on est sur le saut de ligne sï¿½parant les 2 sudokus
             		if (line == "\n")
             			index++;
             		
