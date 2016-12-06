@@ -2,6 +2,7 @@ package vue;/**
  * Created by Laeti on 16/11/2016.
  */
 
+import java.io.File;
 //import java.awt.Button;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -21,11 +22,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.scene.control.Button;
 import modele.Groupe;
 import modele.Jeu;
@@ -38,12 +37,13 @@ public class VueSudoku
     private ControleurSudoku controleurSudoku;
     private Scene scene;
     private SudokuParameters sudokuParameters;
+    private Button[] tableauBoutons;
 
     public VueSudoku(Jeu modeleJeu)
     {
         this.modeleJeu = modeleJeu;
 
-        this.sudokuParameters = modeleJeu.getSudokuParameters();
+        this.sudokuParameters = this.modeleJeu.getSudokuParameters();
         int tailleSudoku = sudokuParameters.getTailleSudoku();
 
         TextField valeur[][];
@@ -90,6 +90,8 @@ public class VueSudoku
                                    }
         );
         
+        this.controleurSudoku = new ControleurSudoku(this.modeleJeu, this);
+        
         this.scene = initialisationDeLaFenetre(valeur, this.sudokuParameters);
     }
 
@@ -128,6 +130,7 @@ public class VueSudoku
 
         general.setGridLinesVisible(true);
 
+        this.tableauBoutons = new Button[4];
         
         hboxBottom = creerHboxBottom();
         gridPaneTop = creerGridPaneTop();
@@ -135,7 +138,6 @@ public class VueSudoku
         border.setCenter(general);
         border.setTop(gridPaneTop);
         border.setBottom(hboxBottom);
-        
 
         Scene scene = new Scene(border, Color.WHITE);
         this.modeleJeu.init(this.modeleJeu.getStr());
@@ -159,7 +161,9 @@ public class VueSudoku
 		labelInfos.setText("");
 		gridPaneTop.add(labelInfos, 0, 0);
         
-        createControleur(boutonVerifier);
+		
+		
+        associerControleur(boutonVerifier);
         gridPaneTop.add(boutonVerifier, 1, 0);
         
         GridPane.setHalignment(labelInfos, HPos.LEFT);
@@ -178,13 +182,13 @@ public class VueSudoku
 		hbox.setAlignment(Pos.CENTER);
 		hbox.setSpacing(20);
 
-		createControleur(boutonResoudre);
+		associerControleur(boutonResoudre);
         hbox.getChildren().add(boutonResoudre);
         
-        createControleur(boutonSauvegarder);
+        associerControleur(boutonSauvegarder);
         hbox.getChildren().add(boutonSauvegarder);
         
-        createControleur(boutonAbandonner);
+        associerControleur(boutonAbandonner);
         hbox.getChildren().add(boutonAbandonner);
         
 		return hbox;
@@ -217,9 +221,10 @@ public class VueSudoku
         });
     }
 
-	private void createControleur(Button button)
+	private void associerControleur(Button button)
     {
-        this.controleurSudoku = new ControleurSudoku(this.modeleJeu, this);
+		this.tableauBoutons[this.tableauBoutons.length - 1] = button;
+		
         button.setOnAction(this.controleurSudoku);
     }
 
@@ -227,6 +232,25 @@ public class VueSudoku
     {
         return this.scene;
     }
+    
+    public Button[] getTableauBoutons()
+	{
+		return tableauBoutons;
+	}
+    
+	public File ouvrirGestionnaireFichier()
+	{
+		FileChooser fileChooser	= new FileChooser();
+		fileChooser.setTitle("Entrer un nom de fichier");
+		File homeDir = new File(System.getProperty("user.home"));
+		fileChooser.setInitialDirectory(homeDir);
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extFilter);
+		File file = fileChooser.showSaveDialog(this.getScene().getWindow());
+		
+		return file;
+	}
+
 
 
 }
