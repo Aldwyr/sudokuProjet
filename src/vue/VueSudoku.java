@@ -170,6 +170,7 @@ public class VueSudoku
 		Button boutonAbandonner = new Button("Abandonner");
 		
 		hbox.setAlignment(Pos.CENTER);
+		hbox.setSpacing(20);
 		
 		createControleur(boutonResoudre);
         hbox.getChildren().add(boutonResoudre);
