@@ -143,7 +143,6 @@ public class VueSudoku
         border.setBottom(hboxBottom);
         
 
-        Scene scene = new Scene(border, Color.WHITE);
         modeleJeu.init(modeleJeu.getStr());
         
         return scene;
