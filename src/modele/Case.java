@@ -4,12 +4,15 @@ public class Case
 {
     protected Valeur valeur;
     protected Groupe groupe[]; // 3
-    protected boolean conflit;
+    protected boolean conflit[];
 
     public Case()
     {
         groupe = new Groupe[3];
-        conflit = false;
+        conflit = new boolean[3];
+        for (int i = 0; i < 3; i++) {
+            conflit[i] = false;
+        }
         valeur = Valeur.fromInt(0);
     }
 
@@ -24,7 +27,11 @@ public class Case
         return valeur;
     }
 
-    public void setValeur(Valeur valeur)
+    public void setValeur(Valeur valeur) {
+        this.valeur = valeur;
+    }
+
+    public void ÜsetValeur(Valeur valeur)
     {
         this.valeur = valeur;
     }
@@ -45,24 +52,25 @@ public class Case
         this.groupe[i] = groupe;
     }
 
-    public boolean isConflit()
-    {
+    public boolean[] getConflit() {
         return conflit;
     }
 
-    public void setConflit(boolean conflit)
-    {
+    public void setConflit(boolean[] conflit) {
         this.conflit = conflit;
+    }
+
+    public void majConflit() {
+        for (int i = 0; i < this.groupe.length; ++i) {
+            if (this.groupe[i].estEnConflit(this)) {
+                this.conflit[i] = true;
+            } else
+                this.conflit[i] = false;
+        }
     }
 
     public void MAJ(Valeur newVal) {
         valeur = newVal;
-        boolean conflit = false;
-
-        for (int i = 0; i < groupe.length; ++i) {
-            if (groupe[i].estEnConflit(this)){
-                conflit = true;
-            }
-        }
+        majConflit();
     }
 }

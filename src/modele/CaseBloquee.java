@@ -18,6 +18,9 @@ public class CaseBloquee extends Case
         }
         groupe = new Groupe[3];
         //Outils.remplirTab(groupe);
-        conflit = false;
+        conflit = new boolean[3];
+        for (int i = 0; i < 3; i++) {
+            conflit[i] = false;
+        }
     }
 }

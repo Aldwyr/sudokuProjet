@@ -1,15 +1,13 @@
-package vue;/**
+/**
  * Created by Laeti on 16/11/2016.
  */
 
+
+package vue;
+
 import java.io.File;
-//import java.awt.Button;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
-import com.sun.xml.internal.fastinfoset.sax.SystemIdResolver;
-import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
 
 import controleur.ControleurSudoku;
 import javafx.event.ActionEvent;
@@ -40,11 +38,12 @@ public class VueSudoku
     private SudokuParameters sudokuParameters;
     private Button[] tableauBoutons;
     private Label affichage;
+    private boolean activeVueConflit;
 
     public VueSudoku(Jeu modeleJeu)
     {
         this.modeleJeu = modeleJeu;
-
+        this.activeVueConflit = false;
         this.sudokuParameters = this.modeleJeu.getSudokuParameters();
         int tailleSudoku = sudokuParameters.getTailleSudoku();
 
@@ -61,7 +60,7 @@ public class VueSudoku
                                            int x = 0;
                                            int y = 0;
                                            Groupe matrice[] = modeleJeu.getNombreDeLignes();
-
+                                           int estEnConflit[][] = modeleJeu.recupLesConfilt();
                                            estBloque[0] = modeleJeu.recupTouteLesTypesDesCases();
 
                                            for (int i = 0; i < tailleSudoku; i++)
@@ -70,15 +69,32 @@ public class VueSudoku
                                                    // Si la case est de type nonBloqué, alors on remplie le tableau
                                                    if (estBloque[0][i][j] == 1)
                                                    {
-                                                       save = valeur[i][j].getText();
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                        if (valeur[i][j].getText().compareTo("0") == 0)
                                                            valeur[i][j].setText("");
+                                                       save = valeur[i][j].getText();
+                                                       if (activeVueConflit)
+                                                           switch (estEnConflit[i][j]) {
+                                                               case 1:
+                                                                   valeur[i][j].setStyle("-fx-background-color: #f0acac;");
+
+                                                                   break;
+                                                               case 2:
+                                                                   valeur[i][j].setStyle("-fx-background-color: #f06768;");
+                                                                   break;
+                                                               case 3:
+                                                                   valeur[i][j].setStyle("-fx-background-color: #ff0026;");
+                                                                   break;
+                                                               default:
+                                                                   valeur[i][j].setStyle("-fx-background-color: white;");
+                                                                   break;
+                                                           }
+                                                       else
+                                                           valeur[i][j].setStyle("-fx-background-color: white;");
                                                        ajoutControleur(valeur[i][j], i, j, save);
                                                    } 
                                                    else
                                                    {
-
                                                        valeur[i][j].setStyle("-fx-background-color: lightgrey;");
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                        valeur[i][j].setEditable(false);
@@ -99,7 +115,7 @@ public class VueSudoku
         this.scene = initialisationDeLaFenetre(valeur, this.sudokuParameters);
     }
 
-    public Scene initialisationDeLaFenetre(TextField[][] valeur, SudokuParameters sudokuParameters)
+    private Scene initialisationDeLaFenetre(TextField[][] valeur, SudokuParameters sudokuParameters)
     {
         BorderPane border = new BorderPane();
         GridPane general = new GridPane();
@@ -111,7 +127,7 @@ public class VueSudoku
         int row = 0;
         
         if (sudokuParameters.getTableauStringSudokuRempli() != null)
-        	sudokuRempli = sudokuParameters.getTableauStringSudokuRempli();
+            sudokuRempli = sudokuParameters.getTableauStringSudokuRempli(); // TODO: N'est jamais utilié -> a supprimé ?
 
         for (int i = 0; i < sudokuParameters.getTailleSudoku(); ++i)
         {
@@ -160,13 +176,11 @@ public class VueSudoku
 		colonne1.setPercentWidth(50);
 		colonne2.setPercentWidth(50);
 		gridPaneTop.getColumnConstraints().addAll(colonne1, colonne2);
-		
-		
+
 		this.affichage.setText("");
 		gridPaneTop.add(this.affichage, 0, 0);
-        
-		
-		
+
+
         associerControleur(boutonVerifier);
         gridPaneTop.add(boutonVerifier, 1, 0);
         
@@ -216,14 +230,14 @@ public class VueSudoku
                     erreur = true;
                     System.out.print(save);
                     valeur.setText(save);
-                    affichage.setStyle("-fx-text-inner-color: red");
+                    affichage.setStyle("-fx-text-inner-color: red"); // TODO: NE marche pas.
                     affichage.setText("Entrez un chiffre entre 1 et 9.");
                 }
-                if (number > sudokuParameters.getTailleSudoku() || number < 1 && !erreur)
+                if (number > sudokuParameters.getTailleSudoku() || number < 0 && !erreur)
                 {
                     affichage.setText("Valeur entre 1 et 9 inclus.");
                     valeur.setText(save);
-                } else if (number != 0)
+                } else
                 {
                     affichage.setText("");
                     modeleJeu.changeValeurCase(number, posx, posy);
@@ -234,9 +248,22 @@ public class VueSudoku
 
 	private void associerControleur(Button button)
     {
-		this.tableauBoutons[this.tableauBoutons.length - 1] = button;
-		
+        //TODO : Je ne comprend pas pourquoi tu fait un talbeau.length - 1. Le tableau est toujours à 4 donc tu remplace toujours le dernier.
+        int i = 0;
+        while (tableauBoutons[i] != null) {
+            ++i;
+        }
+        this.tableauBoutons[i] = button;
+
         button.setOnAction(this.controleurSudoku);
+    }
+
+    public boolean isActiveVueConflit() {
+        return activeVueConflit;
+    }
+
+    public void setActiveVueConflit(boolean activeVueConflit) {
+        this.activeVueConflit = activeVueConflit;
     }
 
     public Scene getScene()

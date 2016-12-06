@@ -98,6 +98,21 @@ public class Jeu extends Observable
         return tableauGroupeLignes;
     }
 
+    public int[][] recupLesConfilt() {
+        //NOTE: 3 niveau : 1 -> 1 conflit, 2 -> 2 conflit, 3...
+        int conflit[][] = new int[this.getTailleSudoku()][this.getTailleSudoku()];
+        boolean resultatConflit[];
+        for (int i = 0; i < this.getTailleSudoku(); i++) {
+            for (int j = 0; j < this.getTailleSudoku(); j++) {
+                resultatConflit = this.tableauGroupeLignes[i].getCases()[j].getConflit();
+                for (int k = 0; k < 3; k++) {
+                    if (resultatConflit[k])
+                        conflit[i][j]++;
+                }
+            }
+        }
+        return conflit;
+    }
 
     public int[][] recupTouteLesTypesDesCases()
     {
@@ -126,12 +141,12 @@ public class Jeu extends Observable
                 }
             }
         }
-
         setChanged();
         notifyObservers();
 
     }
-        
+
+
     public int getTailleSudoku()
     {
         return tailleSudoku;
@@ -151,5 +166,9 @@ public class Jeu extends Observable
 	{
 		return this.sudokuParameters;
 	}
-    
+
+    public void notifierLaVue() {
+        setChanged();
+        notifyObservers();
+    }
 }

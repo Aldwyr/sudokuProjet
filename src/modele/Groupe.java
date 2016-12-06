@@ -31,8 +31,9 @@ public class Groupe
 
         for (Case c2 : cases)
         {
-            if (c != c2 && c.getValeur() == c2.getValeur())
+            if (c != c2 && c.getValeur() == c2.getValeur()) {
                 return true;
+            }
         }
         return false;
     }
