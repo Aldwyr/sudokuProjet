@@ -10,6 +10,7 @@ import java.util.Observer;
 import controleur.ControleurSudoku;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -85,8 +86,8 @@ public class VueSudoku
     {
         BorderPane border = new BorderPane();
         GridPane general = new GridPane();
-        HBox hbox = new HBox();
-        Button boutonSauvegarder = new Button("Sauvegarder");
+        HBox hboxBottom;
+        HBox hboxTop;
         String[] sudokuRempli = null;
 
         int column = 0;
@@ -129,12 +130,14 @@ public class VueSudoku
 
         general.setGridLinesVisible(true);
 
-        hbox.setAlignment(Pos.CENTER);
-        createControleur(boutonSauvegarder);
-        hbox.getChildren().add(boutonSauvegarder);
+        
+        hboxBottom = creerHboxBottom();
+        hboxTop = creerHboxTop();
 
         border.setCenter(general);
-        border.setBottom(hbox);
+        border.setTop(hboxTop);
+        border.setBottom(hboxBottom);
+        
 
         Scene scene = new Scene(border, Color.WHITE);
         modeleJeu.init(modeleJeu.getStr());
@@ -142,10 +145,42 @@ public class VueSudoku
         return scene;
     }
 
-    private String recupererValeurRentreePrecedemment()
+	private HBox creerHboxTop() 
 	{
+		HBox hbox = new HBox();
+		Label labelInfos = new Label();
+		Button boutonVerifier = new Button("Vérifier grille");
 		
-		return null;
+		hbox.setAlignment(Pos.CENTER);
+		labelInfos.setText("test");
+		
+        hbox.getChildren().add(labelInfos);
+        
+        createControleur(boutonVerifier);
+        hbox.getChildren().add(boutonVerifier);
+        
+        return hbox;
+	}
+
+	private HBox creerHboxBottom() 
+	{
+		HBox hbox = new HBox();
+		Button boutonResoudre = new Button("Résoudre");
+		Button boutonSauvegarder = new Button("Sauvegarder");
+		Button boutonAbandonner = new Button("Abandonner");
+		
+		hbox.setAlignment(Pos.CENTER);
+		
+		createControleur(boutonResoudre);
+        hbox.getChildren().add(boutonResoudre);
+        
+        createControleur(boutonSauvegarder);
+        hbox.getChildren().add(boutonSauvegarder);
+        
+        createControleur(boutonAbandonner);
+        hbox.getChildren().add(boutonAbandonner);
+        
+		return hbox;
 	}
 
 	private void createControleur(Button button)
