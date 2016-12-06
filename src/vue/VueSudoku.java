@@ -92,8 +92,6 @@ public class VueSudoku
         int column = 0;
         int row = 0;
         
-        System.out.println(sudokuParameters.getTableauStringSudokuRempli()[0]);
-        
         if (sudokuParameters.getTableauStringSudokuRempli() != null)
         	sudokuRempli = sudokuParameters.getTableauStringSudokuRempli();
 
@@ -101,18 +99,17 @@ public class VueSudoku
         {
             for (int j = 0; j < sudokuParameters.getTailleSudoku(); j++) 
             {
-                valeur[i][j] = new TextField("0");
+                valeur[i][j] = new TextField("");
                 
                 if (sudokuParameters.getTableauStringSudokuRempli() != null)
                 {
                 	String caractereAMettreDansLaCase;
-                	
-                	System.out.println(String.valueOf(sudokuRempli[i]));
-                	caractereAMettreDansLaCase= String.valueOf(sudokuRempli[i].charAt(j));
+                	//System.out.println(String.valueOf(sudokuRempli[i]));
+                	caractereAMettreDansLaCase = "1";
                 	
                 	
                 	if (caractereAMettreDansLaCase != "0")
-                		valeur[i][j].setText(caractereAMettreDansLaCase);
+                		valeur[i][j].setText("1");
                 }
                 
 

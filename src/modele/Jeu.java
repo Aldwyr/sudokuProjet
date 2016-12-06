@@ -107,6 +107,28 @@ public class Jeu extends Observable
         
         return typeDesCases;
     }
+    
+    public void miseAJourValeurCases() 
+	{
+    	String[] strSudokuCommence = sudokuParameters.getTableauStringSudokuRempli();
+    	
+    	for (int i = 0; i < strSudokuCommence.length - 1; ++i)
+        {
+            for (int j = 0; j < strSudokuCommence.length - 1; j++)
+            {
+                String emplacementCase = strSudokuCommence[i + 1].substring(j, j + 1);
+                
+                if (!(Objects.equals(emplacementCase, "0")))
+                {
+                	this.tableauGroupeLignes[i].getCases()[j].setValeur(Valeur.fromInt(Integer.parseInt(emplacementCase)));
+                }
+            }
+        }
+        
+        setChanged();
+        notifyObservers();
+		
+	}
         
     public int getTailleSudoku()
     {

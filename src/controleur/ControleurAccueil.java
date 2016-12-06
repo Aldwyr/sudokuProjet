@@ -40,7 +40,7 @@ public class ControleurAccueil implements EventHandler<ActionEvent>
 			this.modeleJeu.creerNouveauSudoku(file.getAbsolutePath());
 			
 			this.vueSudoku = new VueSudoku(this.modeleJeu);
-			ControleurSudoku controleurSudoku = new ControleurSudoku(this.modeleJeu, vueSudoku);
+			ControleurSudoku controleurSudoku = new ControleurSudoku(this.modeleJeu, this.vueSudoku);
 			
 			Stage stage = new Stage();
 			stage.setTitle("Nouveau Sudoku");
@@ -53,10 +53,12 @@ public class ControleurAccueil implements EventHandler<ActionEvent>
 			this.modeleJeu.chargerSudokuCommence(file.getAbsolutePath());
 			
 			this.vueSudoku = new VueSudoku(this.modeleJeu);
-			ControleurSudoku controleurSudoku = new ControleurSudoku(this.modeleJeu, vueSudoku);
+			ControleurSudoku controleurSudoku = new ControleurSudoku(this.modeleJeu, this.vueSudoku);
+			
+			this.modeleJeu.miseAJourValeurCases();
 			
 			Stage stage = new Stage();
-			stage.setTitle("Sudoku commencé");
+			stage.setTitle("Sudoku commencï¿½");
 	        stage.setScene(vueSudoku.getScene());
 	        stage.show();
 		}

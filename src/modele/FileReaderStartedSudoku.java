@@ -26,7 +26,7 @@ public class FileReaderStartedSudoku
 	}
 	
 	
-	// On change la fonction de la superclasse en ajoutant la lecture de la deuxième partie du fichier texte
+	// On change la fonction de la superclasse en ajoutant la lecture de la deuxiï¿½me partie du fichier texte
 	public void readFromFileDejaCommence(String filename) throws FileNotFoundException
     {
     	SudokuParameters sudokuParameters = new SudokuParameters();
@@ -35,6 +35,7 @@ public class FileReaderStartedSudoku
         String[] tableauStringSudokuVide = null;
         String[] tableauStringSudokuRempli = null;
         int index = 0;
+        int indexDeuxiemeSudoku = 0;
 
         try
         {
@@ -49,30 +50,30 @@ public class FileReaderStartedSudoku
             	if (nombreDeLignes == -1)
             	{
             		nombreDeLignes = Integer.parseInt(line);
-            		tableauStringSudokuVide = new String[nombreDeLignes];
-            		tableauStringSudokuRempli = new String[nombreDeLignes];
-            		System.out.println(nombreDeLignes);
-            		
-            	}
-            	
-            	System.out.println(line);
-            	
-            	if (index <= nombreDeLignes + 1)
-            	{
-            		
-            		tableauStringSudokuVide[index] = line;
-            		
+            		tableauStringSudokuVide = new String[nombreDeLignes + 1];
+            		tableauStringSudokuRempli = new String[nombreDeLignes + 1];
+            		index++;
             	}
             	else
             	{
-            		//On passe à la prochaine ligne si on est sur le saut de ligne séparant les 2 sudokus
-            		if (line == "\n")
-            			index++;
-            		
-            		tableauStringSudokuRempli[index] = line;
+                	if (index <= nombreDeLignes)
+                	{
+                		tableauStringSudokuVide[index] = line;
+                	}
+                	else
+                	{
+                		//On passe ï¿½ la prochaine ligne si on est sur le saut de ligne sï¿½parant les 2 sudokus
+                		if (line == "\n")
+                			index++;
+                		else
+                		{
+                			tableauStringSudokuRempli[indexDeuxiemeSudoku] = line;
+                    		indexDeuxiemeSudoku++;
+                		}
+                	}
+                	
+                    index++;
             	}
-            	
-                index++;
             }
             
             bufferedReader.close();
@@ -83,11 +84,8 @@ public class FileReaderStartedSudoku
         }
         
         sudokuParameters.setTableauStringSudokuVide(tableauStringSudokuVide);
-        sudokuParameters.setTailleSudoku(Integer.parseInt(tableauStringSudokuVide[0]));
-        sudokuParameters.setTableauStringSudokuRempli(tableauStringSudokuRempli);
-        
-        System.out.println(tableauStringSudokuRempli[0]);
-        
+        sudokuParameters.setTailleSudoku(nombreDeLignes);
+        sudokuParameters.setTableauStringSudokuRempli(tableauStringSudokuRempli);        
         this.sudokuParameters = sudokuParameters;
 
     }

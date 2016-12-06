@@ -15,7 +15,7 @@ public class FileReader
     {    	
     	try
 		{
-			readFromFileDejaCommence(filename);
+			readFromFile(filename);
 		} 
     	catch (FileNotFoundException e)
 		{
@@ -24,7 +24,7 @@ public class FileReader
 		}
     }
 
-    public void readFromFileDejaCommence(String filename) throws FileNotFoundException
+    public void readFromFile(String filename) throws FileNotFoundException
     {
     	System.out.println("test");
     	SudokuParameters sudokuParameters = new SudokuParameters();
