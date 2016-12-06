@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.sun.xml.internal.fastinfoset.sax.SystemIdResolver;
 import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
 
 import controleur.ControleurSudoku;
@@ -38,6 +39,7 @@ public class VueSudoku
     private Scene scene;
     private SudokuParameters sudokuParameters;
     private Button[] tableauBoutons;
+    private Label affichage;
 
     public VueSudoku(Jeu modeleJeu)
     {
@@ -55,6 +57,7 @@ public class VueSudoku
                                        @Override
                                        public void update(Observable o, Object arg)
                                        {
+                                           String save;
                                            int x = 0;
                                            int y = 0;
                                            Groupe matrice[] = modeleJeu.getNombreDeLignes();
@@ -67,10 +70,11 @@ public class VueSudoku
                                                    // Si la case est de type nonBloqué, alors on remplie le tableau
                                                    if (estBloque[0][i][j] == 1)
                                                    {
+                                                       save = valeur[i][j].getText();
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                        if (valeur[i][j].getText().compareTo("0") == 0)
                                                            valeur[i][j].setText("");
-                                                       ajoutControleur(valeur[i][j], i, j);
+                                                       ajoutControleur(valeur[i][j], i, j, save);
                                                    } 
                                                    else
                                                    {
@@ -148,7 +152,7 @@ public class VueSudoku
 	private GridPane creerGridPaneTop() 
 	{
 		GridPane gridPaneTop = new GridPane();
-		Label labelInfos = new Label();
+		this.affichage = new Label();
 		Button boutonVerifier = new Button("Vérifier grille");
 		ColumnConstraints colonne1 = new ColumnConstraints();
 		ColumnConstraints colonne2 = new ColumnConstraints();
@@ -158,15 +162,15 @@ public class VueSudoku
 		gridPaneTop.getColumnConstraints().addAll(colonne1, colonne2);
 		
 		
-		labelInfos.setText("");
-		gridPaneTop.add(labelInfos, 0, 0);
+		this.affichage.setText("");
+		gridPaneTop.add(this.affichage, 0, 0);
         
 		
 		
         associerControleur(boutonVerifier);
         gridPaneTop.add(boutonVerifier, 1, 0);
         
-        GridPane.setHalignment(labelInfos, HPos.LEFT);
+        GridPane.setHalignment(this.affichage, HPos.LEFT);
         GridPane.setHalignment(boutonVerifier, HPos.RIGHT);
         
         return gridPaneTop;
@@ -194,13 +198,14 @@ public class VueSudoku
 		return hbox;
 	}
 
-    private void ajoutControleur(TextField valeur, final int posx, final int posy)
+    private void ajoutControleur(TextField valeur, final int posx, final int posy,String save)
     {
         valeur.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
             {
+                boolean erreur = false;
                 int number = 0;
                 try
                 {
@@ -208,13 +213,19 @@ public class VueSudoku
                 }
                 catch (NumberFormatException e)
                 {
-                    valeur.setText("");
+                    erreur = true;
+                    System.out.print(save);
+                    valeur.setText(save);
+                    affichage.setStyle("-fx-text-inner-color: red");
+                    affichage.setText("Entrez un chiffre entre 1 et 9.");
                 }
-                if (number > sudokuParameters.getTailleSudoku() || number < 1)
+                if (number > sudokuParameters.getTailleSudoku() || number < 1 && !erreur)
                 {
-                    valeur.setText("");
-                } else
+                    affichage.setText("Valeur entre 1 et 9 inclus.");
+                    valeur.setText(save);
+                } else if (number != 0)
                 {
+                    affichage.setText("");
                     modeleJeu.changeValeurCase(number, posx, posy);
                 }
             }
