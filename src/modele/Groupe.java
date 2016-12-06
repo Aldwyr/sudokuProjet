@@ -54,6 +54,7 @@ public class Groupe
         else
             return 2;
     }
+
     public Case recupCase(int y)
     {
         return this.getCases()[y];

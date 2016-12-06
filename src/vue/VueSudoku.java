@@ -8,6 +8,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import controleur.ControleurSudoku;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -60,12 +62,14 @@ public class VueSudoku
                                                    // Si la case est de type nonBloqué, alors on remplie le tableau
                                                    if (estBloque[0][i][j] == 1)
                                                    {
-                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
-                                                        if (valeur[i][j].getText().compareTo("0") == 0)
+                                                       valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
+                                                       if (valeur[i][j].getText().compareTo("0") == 0)
                                                            valeur[i][j].setText("");
-                                                   } 
-                                                   else 
+                                                       ajoutControlleur(valeur[i][j], i, j);
+                                                   } else
                                                    {
+
+                                                       valeur[i][j].setStyle("-fx-background-color: lightgrey;");
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                        valeur[i][j].setEditable(false);
                                                    }
@@ -145,43 +149,75 @@ public class VueSudoku
         return scene;
     }
 
-	private HBox creerHboxTop() 
+	private HBox creerHboxTop()
 	{
 		HBox hbox = new HBox();
 		Label labelInfos = new Label();
 		Button boutonVerifier = new Button("Vérifier grille");
-		
+
 		hbox.setAlignment(Pos.CENTER);
 		labelInfos.setText("test");
-		
+
         hbox.getChildren().add(labelInfos);
-        
+
         createControleur(boutonVerifier);
         hbox.getChildren().add(boutonVerifier);
-        
+
         return hbox;
 	}
 
-	private HBox creerHboxBottom() 
+	private HBox creerHboxBottom()
 	{
 		HBox hbox = new HBox();
 		Button boutonResoudre = new Button("Résoudre");
 		Button boutonSauvegarder = new Button("Sauvegarder");
 		Button boutonAbandonner = new Button("Abandonner");
-		
+
 		hbox.setAlignment(Pos.CENTER);
-		
+
 		createControleur(boutonResoudre);
         hbox.getChildren().add(boutonResoudre);
-        
+
         createControleur(boutonSauvegarder);
         hbox.getChildren().add(boutonSauvegarder);
-        
+
         createControleur(boutonAbandonner);
         hbox.getChildren().add(boutonAbandonner);
-        
-		return hbox;
-	}
+
+        return hbox;
+    }
+
+    private void ajoutControlleur(TextField valeur, final int posx, final int posy)
+    {
+        valeur.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                int number = 0;
+                try
+                {
+                    number = Integer.parseInt(valeur.getText());
+                }
+                catch (NumberFormatException e)
+                {
+                    valeur.setText("");
+                }
+                if (number > sudokuParameters.getTailleSudoku() || number < 1)
+                {
+                    valeur.setText("");
+                } else
+                {
+                    modeleJeu.changeValeurCase(number, posx, posy);
+                }
+            }
+        });
+    }
+    private String recupererValeurRentreePrecedemment()
+    {
+
+        return null;
+    }
 
 	private void createControleur(Button button)
     {

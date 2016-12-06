@@ -35,7 +35,7 @@ public class FileReaderStartedSudoku
         String[] tableauStringSudokuVide = null;
         String[] tableauStringSudokuRempli = null;
         int index = 0;
-        int indexDeuxiemeSudoku = 0;
+		int indexDeuxiemeSudoku = 0;
 
         try
         {
@@ -50,30 +50,29 @@ public class FileReaderStartedSudoku
             	if (nombreDeLignes == -1)
             	{
             		nombreDeLignes = Integer.parseInt(line);
-            		tableauStringSudokuVide = new String[nombreDeLignes + 1];
-            		tableauStringSudokuRempli = new String[nombreDeLignes + 1];
-            		index++;
-            	}
+					tableauStringSudokuVide = new String[nombreDeLignes + 1];
+					tableauStringSudokuRempli = new String[nombreDeLignes + 1];
+					index++;
+				}
             	else
             	{
-                	if (index <= nombreDeLignes)
-                	{
-                		tableauStringSudokuVide[index] = line;
-                	}
-                	else
-                	{
-                		//On passe � la prochaine ligne si on est sur le saut de ligne s�parant les 2 sudokus
-                		if (line == "\n")
-                			index++;
-                		else
-                		{
-                			tableauStringSudokuRempli[indexDeuxiemeSudoku] = line;
-                    		indexDeuxiemeSudoku++;
-                		}
-                	}
+					if (index <= nombreDeLignes)
+					{
+						tableauStringSudokuVide[index] = line;
+					} else
+					{
+						//On passe � la prochaine ligne si on est sur le saut de ligne s�parant les 2 sudokus
+						if (line == "\n")
+							index++;
+						else
+						{
+							tableauStringSudokuRempli[indexDeuxiemeSudoku] = line;
+							indexDeuxiemeSudoku++;
+						}
+					}
 
-                    index++;
-            	}
+					index++;
+				}
             }
             
             bufferedReader.close();
@@ -84,8 +83,8 @@ public class FileReaderStartedSudoku
         }
         
         sudokuParameters.setTableauStringSudokuVide(tableauStringSudokuVide);
-        sudokuParameters.setTailleSudoku(nombreDeLignes);
-        sudokuParameters.setTableauStringSudokuRempli(tableauStringSudokuRempli);
+		sudokuParameters.setTailleSudoku(nombreDeLignes);
+		sudokuParameters.setTableauStringSudokuRempli(tableauStringSudokuRempli);
         this.sudokuParameters = sudokuParameters;
 
     }

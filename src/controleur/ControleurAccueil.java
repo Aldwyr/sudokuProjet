@@ -54,7 +54,7 @@ public class ControleurAccueil implements EventHandler<ActionEvent>
 			
 			this.vueSudoku = new VueSudoku(this.modeleJeu);
 			ControleurSudoku controleurSudoku = new ControleurSudoku(this.modeleJeu, this.vueSudoku);
-			
+
 			this.modeleJeu.miseAJourValeurCases();
 			
 			Stage stage = new Stage();

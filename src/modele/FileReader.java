@@ -15,8 +15,8 @@ public class FileReader
     {    	
     	try
 		{
-			readFromFile(filename);
-		} 
+            readFromFile(filename);
+        }
     	catch (FileNotFoundException e)
 		{
 			// TODO Auto-generated catch block
