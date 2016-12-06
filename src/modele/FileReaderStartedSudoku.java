@@ -71,7 +71,7 @@ public class FileReaderStartedSudoku
                     		indexDeuxiemeSudoku++;
                 		}
                 	}
-                	
+
                     index++;
             	}
             }
@@ -85,7 +85,7 @@ public class FileReaderStartedSudoku
         
         sudokuParameters.setTableauStringSudokuVide(tableauStringSudokuVide);
         sudokuParameters.setTailleSudoku(nombreDeLignes);
-        sudokuParameters.setTableauStringSudokuRempli(tableauStringSudokuRempli);        
+        sudokuParameters.setTableauStringSudokuRempli(tableauStringSudokuRempli);
         this.sudokuParameters = sudokuParameters;
 
     }
