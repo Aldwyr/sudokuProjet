@@ -26,7 +26,6 @@ public class FileReader
 
     public void readFromFile(String filename) throws FileNotFoundException
     {
-    	System.out.println("test");
     	SudokuParameters sudokuParameters = new SudokuParameters();
     	
         int nombreDeLigne = recupererNombreDeLigne(filename);
@@ -58,6 +57,7 @@ public class FileReader
         sudokuParameters.setTailleSudoku(Integer.parseInt(tableauStringSudoku[0]));
         
         this.sudokuParameters = sudokuParameters;
+        
 
     }
 

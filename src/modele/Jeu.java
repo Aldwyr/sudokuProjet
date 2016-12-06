@@ -44,12 +44,7 @@ public class Jeu extends Observable
     	this.tailleSudoku = this.sudokuParameters.getTailleSudoku();
     	this.strSudokuVide = this.sudokuParameters.getTableauStringSudokuVide();
     	this.strSudokuRempli = this.sudokuParameters.getTableauStringSudokuRempli();
-    	
-    	for (int i = 0; i < this.strSudokuVide.length; i++)
-    	{
-    		
-    	}
-    	
+
     }
 
     public void init(String[] tableauStr)

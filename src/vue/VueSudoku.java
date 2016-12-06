@@ -7,16 +7,21 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
+
 import controleur.ControleurSudoku;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -65,8 +70,9 @@ public class VueSudoku
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                        if (valeur[i][j].getText().compareTo("0") == 0)
                                                            valeur[i][j].setText("");
-                                                       ajoutControlleur(valeur[i][j], i, j);
-                                                   } else
+                                                       ajoutControleur(valeur[i][j], i, j);
+                                                   } 
+                                                   else
                                                    {
 
                                                        valeur[i][j].setStyle("-fx-background-color: lightgrey;");
@@ -83,7 +89,8 @@ public class VueSudoku
                                        }
                                    }
         );
-        scene = initialisationDeLaFenetre(valeur, sudokuParameters);
+        
+        this.scene = initialisationDeLaFenetre(valeur, this.sudokuParameters);
     }
 
     public Scene initialisationDeLaFenetre(TextField[][] valeur, SudokuParameters sudokuParameters)
@@ -91,7 +98,7 @@ public class VueSudoku
         BorderPane border = new BorderPane();
         GridPane general = new GridPane();
         HBox hboxBottom;
-        HBox hboxTop;
+        GridPane gridPaneTop;
         String[] sudokuRempli = null;
 
         int column = 0;
@@ -106,21 +113,8 @@ public class VueSudoku
             {
                 valeur[i][j] = new TextField("");
                 
-                if (sudokuParameters.getTableauStringSudokuRempli() != null)
-                {
-                	String caractereAMettreDansLaCase;
-                	//System.out.println(String.valueOf(sudokuRempli[i]));
-                	caractereAMettreDansLaCase = "1";
-                	
-                	
-                	if (caractereAMettreDansLaCase != "0")
-                		valeur[i][j].setText("1");
-                }
-                
-
                 valeur[i][j].setMaxWidth(40);
                 valeur[i][j].setFont(Font.font("Verdana", 20));
-//                valeur[i][j].setTextAlignment(TextAlignment.CENTER);
 
                 general.add(valeur[i][j], column++, row);
             }
@@ -136,33 +130,42 @@ public class VueSudoku
 
         
         hboxBottom = creerHboxBottom();
-        hboxTop = creerHboxTop();
+        gridPaneTop = creerGridPaneTop();
 
         border.setCenter(general);
-        border.setTop(hboxTop);
+        border.setTop(gridPaneTop);
         border.setBottom(hboxBottom);
         
 
-        modeleJeu.init(modeleJeu.getStr());
+        Scene scene = new Scene(border, Color.WHITE);
+        this.modeleJeu.init(this.modeleJeu.getStr());
         
         return scene;
     }
 
-	private HBox creerHboxTop() 
+	private GridPane creerGridPaneTop() 
 	{
-		HBox hbox = new HBox();
+		GridPane gridPaneTop = new GridPane();
 		Label labelInfos = new Label();
 		Button boutonVerifier = new Button("Vérifier grille");
+		ColumnConstraints colonne1 = new ColumnConstraints();
+		ColumnConstraints colonne2 = new ColumnConstraints();
 		
-		hbox.setAlignment(Pos.CENTER);
-		labelInfos.setText("test");
+		colonne1.setPercentWidth(50);
+		colonne2.setPercentWidth(50);
+		gridPaneTop.getColumnConstraints().addAll(colonne1, colonne2);
 		
-        hbox.getChildren().add(labelInfos);
+		
+		labelInfos.setText("");
+		gridPaneTop.add(labelInfos, 0, 0);
         
         createControleur(boutonVerifier);
-        hbox.getChildren().add(boutonVerifier);
+        gridPaneTop.add(boutonVerifier, 1, 0);
         
-        return hbox;
+        GridPane.setHalignment(labelInfos, HPos.LEFT);
+        GridPane.setHalignment(boutonVerifier, HPos.RIGHT);
+        
+        return gridPaneTop;
 	}
 
 	private HBox creerHboxBottom() 
@@ -187,7 +190,7 @@ public class VueSudoku
 		return hbox;
 	}
 
-    private void ajoutControlleur(TextField valeur, final int posx, final int posy)
+    private void ajoutControleur(TextField valeur, final int posx, final int posy)
     {
         valeur.setOnAction(new EventHandler<ActionEvent>()
         {
@@ -213,11 +216,6 @@ public class VueSudoku
             }
         });
     }
-    private String recupererValeurRentreePrecedemment()
-    {
-
-        return null;
-    }
 
 	private void createControleur(Button button)
     {
@@ -227,7 +225,7 @@ public class VueSudoku
 
     public Scene getScene()
     {
-        return scene;
+        return this.scene;
     }
 
 
