@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Observable;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 import vue.VueSudoku;
 
 /**
@@ -69,7 +71,7 @@ public class Jeu extends Observable
                 
                 if (Objects.equals(emplacementCase, "0"))
                 {
-                    cases = new CaseNonBloquee();
+                    cases = new CaseNonBloquee(this.sudokuParameters);
                 } 
                 else
                 {
@@ -81,10 +83,32 @@ public class Jeu extends Observable
             }
 
         }
+    	
+    	initialiserTableauValeursPossibles();
         
         setChanged();
         notifyObservers();
     }
+
+	private void initialiserTableauValeursPossibles() 
+	{
+		// On recupère les groupes de cases		
+		for (int i = 0; i< this.tableauGroupeLignes.length; i++)
+    	{
+			Groupe groupe = this.tableauGroupeLignes[i];
+    		// on parcourt chaque case du groupe
+    		for (int j = 0; j < groupe.getCases().length; j++)
+    		{
+    			Case cases = groupe.getCases()[j];
+    			
+    			if (cases instanceof CaseNonBloquee)
+    			{
+    				CaseNonBloquee caseNonBloquee = (CaseNonBloquee) cases;
+    				caseNonBloquee.initialiserValeursPossibles();
+    			}
+    		}
+    	}
+	}
 
     public void changeValeurCase(int newValeur, int posx, int posY)
     {
@@ -141,8 +165,8 @@ public class Jeu extends Observable
                 }
             }
         }
-        setChanged();
-        notifyObservers();
+        
+        notifierLaVue();
 
     }
 
@@ -171,4 +195,29 @@ public class Jeu extends Observable
         setChanged();
         notifyObservers();
     }
+
+	public void resoudreSudoku() 
+	{
+		// On recupère les groupes de cases		
+		for (int i = 0; i< this.tableauGroupeLignes.length; i++)
+    	{
+			Groupe groupe = this.tableauGroupeLignes[i];
+    		// on parcourt chaque case du groupe
+    		for (int j = 0; j < groupe.getCases().length; j++)
+    		{
+    			Case cases = groupe.getCases()[j];
+    			
+    			if (cases instanceof CaseNonBloquee)
+    			{
+    				CaseNonBloquee caseNonBloquee = (CaseNonBloquee) cases;
+    				if (caseNonBloquee.getValeurPossible().size() == 1)
+    				{
+    					caseNonBloquee.valeur = caseNonBloquee.getValeurPossible().get(0);
+    				}
+    					
+    			}
+    		}
+    	}
+		
+	}
 }
