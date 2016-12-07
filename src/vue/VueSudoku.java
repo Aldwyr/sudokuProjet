@@ -35,7 +35,7 @@ public class VueSudoku
     private Scene scene;
     private SudokuParameters sudokuParameters;
     private Button[] tableauBoutons;
-    private Label affichage;
+    //private Label affichage;
     private boolean activeVueConflit;
 
     public VueSudoku(Jeu modeleJeu)
@@ -187,7 +187,7 @@ public class VueSudoku
 
         general.setGridLinesVisible(true);
 
-        this.tableauBoutons = new Button[4];
+        this.tableauBoutons = new Button[5];
         
         hboxBottom = creerHboxBottom();
         gridPaneTop = creerGridPaneTop();
@@ -205,8 +205,9 @@ public class VueSudoku
 	private GridPane creerGridPaneTop() 
 	{
 		GridPane gridPaneTop = new GridPane();
-		this.affichage = new Label();
+		//this.affichage = new Label();
 		Button boutonVerifier = new Button("Vérifier grille");
+		Button boutonReset = new Button("Reset grille");
 		//Checkbox checkBox = new Checkbox("Vérifier grille");
 		ColumnConstraints colonne1 = new ColumnConstraints();
 		ColumnConstraints colonne2 = new ColumnConstraints();
@@ -215,14 +216,16 @@ public class VueSudoku
 		colonne2.setPercentWidth(50);
 		gridPaneTop.getColumnConstraints().addAll(colonne1, colonne2);
 
-		this.affichage.setText("");
-		gridPaneTop.add(this.affichage, 0, 0);
+
 
 
         associerControleur(boutonVerifier);
         gridPaneTop.add(boutonVerifier, 1, 0);
         
-        GridPane.setHalignment(this.affichage, HPos.LEFT);
+        associerControleur(boutonReset);
+		gridPaneTop.add(boutonReset, 0, 0);
+
+        GridPane.setHalignment(boutonReset, HPos.LEFT);
         GridPane.setHalignment(boutonVerifier, HPos.RIGHT);
         
         return gridPaneTop;

@@ -71,6 +71,11 @@ public class ControleurSudoku implements EventHandler<ActionEvent>
 				this.vueSudoku.setActiveVueConflit(true);
 			this.modeleJeu.notifierLaVue();
 		}
+		else if (button == vueSudoku.getTableauBoutons()[4])
+		{
+			this.modeleJeu.viderSudoku();
+			this.modeleJeu.notifierLaVue();
+		}
 
 	}
 
