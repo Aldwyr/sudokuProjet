@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import modele.Jeu;
 
 public class VueMenu
@@ -84,6 +85,12 @@ public class VueMenu
 		File file = fileChooser.showOpenDialog(this.getScene().getWindow());
 		
 		return file;
+	}
+	
+	public void fermerFenetre()
+	{
+		Stage stage = (Stage) this.getScene().getWindow();
+		stage.close();
 	}
 
 }

@@ -7,8 +7,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import modele.FileReader;
-
 import modele.Jeu;
 import vue.VueMenu;
 import vue.VueSudoku;
@@ -42,7 +42,10 @@ public class ControleurAccueil implements EventHandler<ActionEvent>
 			this.vueSudoku = new VueSudoku(this.modeleJeu);
 			ControleurSudoku controleurSudoku = new ControleurSudoku(this.modeleJeu, this.vueSudoku);
 			
+			
+			
 			Stage stage = new Stage();
+			stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nouveau Sudoku");
 	        stage.setScene(vueSudoku.getScene());
 	        stage.show();
@@ -58,7 +61,8 @@ public class ControleurAccueil implements EventHandler<ActionEvent>
 			this.modeleJeu.miseAJourValeurCases();
 			
 			Stage stage = new Stage();
-			stage.setTitle("Sudoku commenc�");
+			stage.initStyle(StageStyle.UNDECORATED);
+			stage.setTitle("Sudoku commencé");
 	        stage.setScene(vueSudoku.getScene());
 	        stage.show();
 		}

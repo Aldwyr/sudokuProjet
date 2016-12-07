@@ -3,6 +3,7 @@ package main;
 import controleur.ControleurAccueil;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import modele.Jeu;
 import vue.VueMenu;
@@ -26,6 +27,7 @@ public class SudokuLauncher extends Application
 		
         primaryStage.setTitle("Menu Sudoku");
         primaryStage.setScene(vueMenu.getScene());
+        primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.show();
 		
 	}
