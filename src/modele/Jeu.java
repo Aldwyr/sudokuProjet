@@ -110,6 +110,27 @@ public class Jeu extends Observable
     	}
 	}
 
+	private void majValeurPossible()
+    {
+        // On recupère les groupes de cases
+        for (int i = 0; i< this.tableauGroupeLignes.length; i++)
+        {
+            Groupe groupe = this.tableauGroupeLignes[i];
+            // on parcourt chaque case du groupe
+            for (int j = 0; j < groupe.getCases().length; j++)
+            {
+                Case cases = groupe.getCases()[j];
+
+                if (cases instanceof CaseNonBloquee && cases.getValeur() == Valeur.ZERO)
+                {
+                    CaseNonBloquee caseNonBloquee = (CaseNonBloquee) cases;
+                    caseNonBloquee.initialiserValeursPossibles();
+                }
+            }
+        }
+
+    }
+
     public void changeValeurCase(int newValeur, int posx, int posY)
     {
         this.tableauGroupeLignes[posx].getCases()[posY].MAJ(Valeur.fromInt(newValeur));
@@ -198,6 +219,7 @@ public class Jeu extends Observable
 
 	public void resoudreSudoku() 
 	{
+        boolean caseAvecUneValeur = false;
 		// On recupère les groupes de cases		
 		for (int i = 0; i< this.tableauGroupeLignes.length; i++)
     	{
@@ -213,10 +235,14 @@ public class Jeu extends Observable
     				if (caseNonBloquee.getValeurPossible().size() == 1)
     				{
     					caseNonBloquee.valeur = caseNonBloquee.getValeurPossible().get(0);
+                        caseAvecUneValeur = true;
     				}
-    					
     			}
     		}
+    		if (caseAvecUneValeur) {
+                majValeurPossible();
+                caseAvecUneValeur = false;
+            }
     	}
 		
 	}
