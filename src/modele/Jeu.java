@@ -64,7 +64,7 @@ public class Jeu extends Observable
             for (int j = 0; j < tableauStr.length - 1; j++)
             {
                 Case cases;
-                //System.out.println(tableauStr.length-1);
+                
                 String emplacementCase = tableauStr[i + 1].substring(j, j + 1);
                 
                 if (Objects.equals(emplacementCase, "0"))
