@@ -61,16 +61,27 @@ public class Case
     }
 
     public void majConflit() {
-        for (int i = 0; i < this.groupe.length; ++i) {
-            if (this.groupe[i].estEnConflit(this)) {
-                this.conflit[i] = true;
-            } else
+        if (this.valeur == Valeur.ZERO)
+        {
+            for (int i = 0; i < 3; i++)
+            {
                 this.conflit[i] = false;
-        }
+            }
+        } else
+            for (int i = 0; i < this.groupe.length; ++i) {
+                if (this.groupe[i].estEnConflit(this)) {
+                    this.conflit[i] = true;
+                } else
+                    this.conflit[i] = false;
+            }
     }
 
     public void MAJ(Valeur newVal) {
         valeur = newVal;
         majConflit();
+        for (int i = 0; i < 3; i++)
+        {
+            this.groupe[i].majConflitGroupe();
+        }
     }
 }

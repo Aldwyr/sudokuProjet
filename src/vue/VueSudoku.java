@@ -95,9 +95,26 @@ public class VueSudoku
                                                    } 
                                                    else
                                                    {
-                                                       valeur[i][j].setStyle("-fx-background-color: lightgrey;");
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
                                                        valeur[i][j].setEditable(false);
+                                                       if (activeVueConflit)
+                                                           switch (estEnConflit[i][j]){
+                                                               case 1:
+                                                                   valeur[i][j].setStyle("-fx-background-color: #f0acac;");
+                                                                   break;
+                                                               case 2:
+                                                                   valeur[i][j].setStyle("-fx-background-color: #f06768;");
+                                                                   break;
+                                                               case 3:
+                                                                   valeur[i][j].setStyle("-fx-background-color: #ff0026;");
+                                                                   break;
+                                                               default:
+                                                                   valeur[i][j].setStyle("-fx-background-color: lightgrey;");
+                                                                   break;
+                                                       } else
+                                                       {
+                                                           valeur[i][j].setStyle("-fx-background-color: lightgrey;");
+                                                       }
                                                    }
                                                }
                                                if (y > tailleSudoku - 1)
@@ -228,7 +245,6 @@ public class VueSudoku
                 catch (NumberFormatException e)
                 {
                     erreur = true;
-                    System.out.print(save);
                     valeur.setText(save);
                     affichage.setStyle("-fx-text-inner-color: red"); // TODO: NE marche pas.
                     affichage.setText("Entrez un chiffre entre 1 et 9.");

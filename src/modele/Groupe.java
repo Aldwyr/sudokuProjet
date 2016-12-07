@@ -38,6 +38,14 @@ public class Groupe
         return false;
     }
 
+    public void majConflitGroupe()
+    {
+        for (int i = 0; i < cases.length; i++)
+        {
+            cases[i].majConflit();
+        }
+    }
+
     public Case[] getCases()
     {
         return cases;
