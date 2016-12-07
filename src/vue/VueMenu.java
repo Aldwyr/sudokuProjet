@@ -28,9 +28,6 @@ public class VueMenu
 	
 	public Scene getScene()
 	{
-		/*BorderPane border = new BorderPane();
-		border.setCenter(addFlowPane());
-		border.setTop(new Label(" "));*/
 		this.scene = new Scene((Parent) addVBox(), Color.WHITE);
 		
 		return this.scene;
@@ -53,7 +50,7 @@ public class VueMenu
 	    createControleur(button[0]);
 	    vBox.getChildren().add(button[0]);
 	    
-	    button[1] = new Button("Ouvrir un sudoku dÈj‡ commencÈ");
+	    button[1] = new Button("Ouvrir un sudoku d√©j√† commenc√©");
 	    createControleur(button[1]);
 	    vBox.getChildren().add(button[1]);
 	    

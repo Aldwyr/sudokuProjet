@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
+import org.omg.CORBA.Environment;
+
 public class FileWriterSudoku 
 {
 	private String sudokuRempli;
@@ -26,9 +28,8 @@ public class FileWriterSudoku
 	    {
 	        // Creation du fichier
 	        fichier.createNewFile();
-	        System.out.println("Fichier crée");
 	        
-	        // creation d'un writer (un écrivain)
+	        // creation d'un writer (un ï¿½crivain)
 	        BufferedWriter writer = new BufferedWriter(new FileWriter(fichier));
 	        
 	        try 
@@ -41,8 +42,10 @@ public class FileWriterSudoku
 	            sudokuRempli = recupererStringSudokuRempli();
 	            System.out.println(sudokuRempli);
 	            
-	            writer.write(tailleSudoku + "\n");
-	            writer.write(sudokuVide + "\n\n");
+	            //writer.write(tailleSudoku);
+	            //writer.newLine();
+	            writer.write(sudokuVide);
+	            writer.newLine();
 	            writer.write(sudokuRempli);
 	        }
 	        finally 
@@ -63,10 +66,10 @@ public class FileWriterSudoku
 		String[] sudokuVide = this.sudokuParameters.getTableauStringSudokuVide();
 		String aRetourner = "";
 		
-		for (int i = 0; i < sudokuVide.length - 1; i++)
+		for (int i = 0; i < sudokuVide.length; i++)
 		{
 			aRetourner += sudokuVide[i];
-			aRetourner += "\n";
+			aRetourner += System.lineSeparator();
 		}
 		
 		return aRetourner;
@@ -83,11 +86,11 @@ public class FileWriterSudoku
 		
 		for (int i = 0; i < this.sudokuParameters.getTailleSudoku() * this.sudokuParameters.getTailleSudoku(); i++)
         {
-            aRetourner += Integer.toString(matrice[x].getCaseValueFromLine(y++));
+            aRetourner += Integer.toString(matrice[x].getValeurCaseColonneDonnee(y++));
 
             if (y > this.sudokuParameters.getTailleSudoku() - 1)
             {
-            	aRetourner += "\n";
+            	aRetourner += System.lineSeparator();
                 y = 0;
                 x++;
             }

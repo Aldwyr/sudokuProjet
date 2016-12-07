@@ -68,7 +68,7 @@ public class Groupe
     {
         return this.getCases()[y];
     }
-    public int getCaseValueFromLine(int y)
+    public int getValeurCaseColonneDonnee(int y)
     {
         return this.getCases()[y].getValeur().toInt();
 

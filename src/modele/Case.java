@@ -5,7 +5,8 @@ public class Case
     protected Valeur valeur;
     protected Groupe groupe[]; // 3
     protected boolean conflit[];
-
+    protected Valeur[] valeurPossible;
+    
     public Case()
     {
         groupe = new Groupe[3];
@@ -21,17 +22,18 @@ public class Case
         this.valeur = valeur;
         this.groupe = groupe;
     }
+    
+    public void initialiserTableauValeursPossible()
+    {
+    	
+    }
 
     public Valeur getValeur()
     {
         return valeur;
     }
 
-    public void setValeur(Valeur valeur) {
-        this.valeur = valeur;
-    }
-
-    public void ÜsetValeur(Valeur valeur)
+    public void setValeur(Valeur valeur) 
     {
         this.valeur = valeur;
     }

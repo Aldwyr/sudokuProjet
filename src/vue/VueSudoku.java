@@ -70,7 +70,7 @@ public class VueSudoku
                                                    // Si la case est de type nonBloqué, alors on remplie le tableau
                                                    if (estBloque[0][i][j] == 1)
                                                    {
-                                                       valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
+                                                       valeur[i][j].setText(Integer.toString(matrice[x].getValeurCaseColonneDonnee(y++)));
                                                        if (valeur[i][j].getText().compareTo("0") == 0)
                                                            valeur[i][j].setText("");
                                                        save = valeur[i][j].getText();
@@ -189,6 +189,7 @@ public class VueSudoku
 		GridPane gridPaneTop = new GridPane();
 		this.affichage = new Label();
 		Button boutonVerifier = new Button("Vérifier grille");
+		//Checkbox checkBox = new Checkbox("Vérifier grille");
 		ColumnConstraints colonne1 = new ColumnConstraints();
 		ColumnConstraints colonne2 = new ColumnConstraints();
 		
@@ -213,8 +214,9 @@ public class VueSudoku
 	{
 		HBox hbox = new HBox();
 		Button boutonResoudre = new Button("Résoudre");
+
 		Button boutonSauvegarder = new Button("Sauvegarder");
-		Button boutonAbandonner = new Button("Abandonner");
+		Button boutonAbandonner = new Button("Abandonner/Quitter");
 		
 		hbox.setAlignment(Pos.CENTER);
 		hbox.setSpacing(20);
@@ -276,12 +278,18 @@ public class VueSudoku
         button.setOnAction(this.controleurSudoku);
     }
 
-    public boolean isActiveVueConflit() {
+    public boolean isActiveVueConflit()
+    {
         return activeVueConflit;
     }
 
-    public void setActiveVueConflit(boolean activeVueConflit) {
+    public void setActiveVueConflit(boolean activeVueConflit)
+    {
         this.activeVueConflit = activeVueConflit;
+        if (this.activeVueConflit)
+        	this.tableauBoutons[3].setStyle("-fx-background-color: linear-gradient(to bottom, #b4e391 0%,#61c419 50%,#b4e391 100%); -fx-text-fill: #FFFFFF");
+        else
+        	this.tableauBoutons[3].setStyle(null);
     }
 
     public Scene getScene()
