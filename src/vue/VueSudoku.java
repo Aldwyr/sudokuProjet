@@ -6,6 +6,7 @@ package vue;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 
 import controleur.ControleurSudoku;
 import controleur.TextFieldListener;
@@ -14,8 +15,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -23,7 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
-import javafx.scene.control.Button;
 import modele.Groupe;
 import modele.Jeu;
 import modele.SudokuParameters;
@@ -128,7 +127,20 @@ public class VueSudoku
                                            if (aucuneCaseVide)
                                            {
                                                modeleJeu.setSudokuResolu(true);
-                                               affichage.setText("Sudoku FINI !! :D");
+                                               Alert boxAlert = new Alert(Alert.AlertType.INFORMATION);
+                                               boxAlert.setTitle("Sudoku FINI !:D");
+                                               boxAlert.setHeaderText("Bravo, vous avez fini le sudoku.");
+
+                                               ButtonType oui = new ButtonType("ok");
+                                               boxAlert.getButtonTypes().setAll(oui);
+
+                                               Optional<ButtonType> choice	= boxAlert.showAndWait();
+
+                                               if (choice.get() == oui)
+                                                   System.exit(0);
+                                               else
+                                                   boxAlert.close();
+
                                            }
                                        }
                                    }
@@ -256,18 +268,14 @@ public class VueSudoku
                 {
                     erreur = true;
                     valeur.setText(save);
-                    affichage.setStyle("-fx-text-inner-color: red"); // TODO: NE marche pas.
-                    affichage.setText("Entrez un chiffre entre 1 et 9.");
                 }
                 
                 if (number > sudokuParameters.getTailleSudoku() || number < 0 && !erreur)
                 {
-                    affichage.setText("Valeur entre 1 et 9 inclus.");
                     valeur.setText(save);
                 } 
                 else
                 {
-                    affichage.setText("");
                     modeleJeu.changeValeurCase(number, posx, posy);
                 }
             }
