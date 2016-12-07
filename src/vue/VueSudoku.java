@@ -10,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import controleur.ControleurSudoku;
+import controleur.TextFieldListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -154,6 +155,7 @@ public class VueSudoku
                 
                 valeur[i][j].setMaxWidth(40);
                 valeur[i][j].setFont(Font.font("Verdana", 20));
+                valeur[i][j].focusedProperty().addListener(new TextFieldListener(valeur[i][j], modeleJeu, i, j));
 
                 general.add(valeur[i][j], column++, row);
             }
