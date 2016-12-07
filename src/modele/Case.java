@@ -5,16 +5,9 @@ public class Case
     protected Valeur valeur;
     protected Groupe groupe[]; // 3
     protected boolean conflit[];
-    protected Valeur[] valeurPossible;
     
     public Case()
     {
-        groupe = new Groupe[3];
-        conflit = new boolean[3];
-        for (int i = 0; i < 3; i++) {
-            conflit[i] = false;
-        }
-        valeur = Valeur.fromInt(0);
     }
 
     public Case(Valeur valeur, Groupe[] groupe)
@@ -23,10 +16,6 @@ public class Case
         this.groupe = groupe;
     }
     
-    public void initialiserTableauValeursPossible()
-    {
-    	
-    }
 
     public Valeur getValeur()
     {

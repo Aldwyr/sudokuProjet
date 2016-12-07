@@ -1,8 +1,6 @@
 /**
  * Created by Laeti on 16/11/2016.
  */
-
-
 package vue;
 
 import java.io.File;
@@ -253,11 +251,13 @@ public class VueSudoku
                     affichage.setStyle("-fx-text-inner-color: red"); // TODO: NE marche pas.
                     affichage.setText("Entrez un chiffre entre 1 et 9.");
                 }
+                
                 if (number > sudokuParameters.getTailleSudoku() || number < 0 && !erreur)
                 {
                     affichage.setText("Valeur entre 1 et 9 inclus.");
                     valeur.setText(save);
-                } else
+                } 
+                else
                 {
                     affichage.setText("");
                     modeleJeu.changeValeurCase(number, posx, posy);

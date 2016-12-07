@@ -34,6 +34,8 @@ public class ControleurSudoku implements EventHandler<ActionEvent>
 		// Bouton résoudre
 		if (button == vueSudoku.getTableauBoutons()[0])
 		{
+			this.modeleJeu.resoudreSudoku();
+			this.modeleJeu.notifierLaVue();
 		}
 		else if (button == vueSudoku.getTableauBoutons()[1]) // bouton sauvegarder
 		{
