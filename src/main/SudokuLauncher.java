@@ -27,7 +27,7 @@ public class SudokuLauncher extends Application
 		
         primaryStage.setTitle("Menu Sudoku");
         primaryStage.setScene(vueMenu.getScene());
-        primaryStage.initStyle(StageStyle.UTILITY);
+//        primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.show();
 		
 	}

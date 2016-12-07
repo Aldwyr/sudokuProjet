@@ -40,16 +40,24 @@ public class TextFieldListener implements ChangeListener<Boolean>
             catch (NumberFormatException e)
             {
                 erreur = true;
-                this.textField.setText(sauvegarde);
+                if (this.textField.getText().compareTo("") != 0)
+                    this.textField.setText(sauvegarde);
+                else
+                {
+                    this.textField.setText("");
+                    sauvegarde = "0";
+                    modeleJeu.changeValeurCase(0, x, y);
+                }
             }
             if (number > this.modeleJeu.getSudokuParameters().getTailleSudoku() || number < 0 && !erreur)
             {
                 this.textField.setText(sauvegarde);
-            } else if (number !=0)
+            } else if (number != 0)
             {
                 this.sauvegarde = Integer.toString(number);
                 modeleJeu.changeValeurCase(number, x, y);
-            } else
+            }
+            if (!erreur)
                 this.textField.setText(sauvegarde);
         }
     }

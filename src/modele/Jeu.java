@@ -229,8 +229,24 @@ public class Jeu extends Observable
         notifyObservers();
     }
 
+    public void viderSudoku()
+    {
+
+        for (int i = 0; i < this.getTailleSudoku(); i++)
+        {
+            for (int j = 0; j < this.getTailleSudoku(); j++)
+            {
+                if (this.tableauGroupeLignes[i].getCases()[j] instanceof CaseNonBloquee)
+                    this.tableauGroupeLignes[i].getCases()[j].setValeur(Valeur.ZERO);
+                this.tableauGroupeLignes[i].majConflitGroupe();
+            }
+        }
+    }
+
 	public void resoudreSudoku() 
 	{
+
+        viderSudoku();
         boolean caseAvecUneValeur = false;
 		// On recupère les groupes de cases		
 		for (int i = 0; i< this.tableauGroupeLignes.length; i++)

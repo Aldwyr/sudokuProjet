@@ -37,11 +37,9 @@ public class FileWriterSudoku
 	        	tailleSudoku = Integer.toString(this.sudokuParameters.getTailleSudoku());
 	            
 	            sudokuVide = recupererStringSudokuVide();
-	            System.out.println(sudokuVide);
-	            
+
 	            sudokuRempli = recupererStringSudokuRempli();
-	            System.out.println(sudokuRempli);
-	            
+
 	            //writer.write(tailleSudoku);
 	            //writer.newLine();
 	            writer.write(sudokuVide);
