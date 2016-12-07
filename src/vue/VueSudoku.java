@@ -56,6 +56,7 @@ public class VueSudoku
                                        public void update(Observable o, Object arg)
                                        {
                                            String save;
+                                           boolean aucuneCaseVide = true;
                                            int x = 0;
                                            int y = 0;
                                            Groupe matrice[] = modeleJeu.getNombreDeLignes();
@@ -69,8 +70,10 @@ public class VueSudoku
                                                    if (estBloque[0][i][j] == 1)
                                                    {
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getValeurCaseColonneDonnee(y++)));
-                                                       if (valeur[i][j].getText().compareTo("0") == 0)
+                                                       if (valeur[i][j].getText().compareTo("0") == 0) {
                                                            valeur[i][j].setText("");
+                                                           aucuneCaseVide = false;
+                                                       }
                                                        save = valeur[i][j].getText();
                                                        if (activeVueConflit)
                                                            switch (estEnConflit[i][j]) {
@@ -121,6 +124,11 @@ public class VueSudoku
                                                    y = 0;
                                                    x++;
                                                }
+                                           }
+                                           if (aucuneCaseVide)
+                                           {
+                                               modeleJeu.setSudokuResolu(true);
+                                               affichage.setText("Sudoku FINI !! :D");
                                            }
                                        }
                                    }

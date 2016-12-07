@@ -20,6 +20,7 @@ public class Jeu extends Observable
     private String[] strSudokuVide;
     private String[] strSudokuRempli;
     private int tailleSudoku;
+    private boolean sudokuResolu;
     private SudokuParameters sudokuParameters;
     
     public Jeu()
@@ -29,6 +30,7 @@ public class Jeu extends Observable
     
     public void creerNouveauSudoku(String path)
 	{
+        this.sudokuResolu = false;
     	FileReader fileReader = new FileReader(path);
     	this.sudokuParameters = fileReader.getSudokuParameters();    	
     	
@@ -197,6 +199,16 @@ public class Jeu extends Observable
         return tailleSudoku;
     }
 
+    public boolean isSudokuResolu()
+    {
+        return sudokuResolu;
+    }
+
+    public void setSudokuResolu(boolean sudokuResolu)
+    {
+        this.sudokuResolu = sudokuResolu;
+    }
+
     public String[] getStr()
     {
         return this.strSudokuVide;
@@ -232,7 +244,7 @@ public class Jeu extends Observable
     			if (cases instanceof CaseNonBloquee)
     			{
     				CaseNonBloquee caseNonBloquee = (CaseNonBloquee) cases;
-    				if (caseNonBloquee.getValeurPossible().size() == 1)
+    				if (caseNonBloquee.getValeurPossible().size() == 1 && caseNonBloquee.getValeur() == Valeur.ZERO)
     				{
     					caseNonBloquee.valeur = caseNonBloquee.getValeurPossible().get(0);
                         caseAvecUneValeur = true;
@@ -241,8 +253,11 @@ public class Jeu extends Observable
     		}
     		if (caseAvecUneValeur) {
                 majValeurPossible();
+                i = -1;
                 caseAvecUneValeur = false;
             }
+            if (this.sudokuResolu)
+                caseAvecUneValeur = false;
     	}
 		
 	}

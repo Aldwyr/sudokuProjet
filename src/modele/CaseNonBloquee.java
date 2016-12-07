@@ -48,8 +48,13 @@ public class CaseNonBloquee extends Case
     		
     	}
     }
-    
-    public ArrayList<Valeur> getValeurPossible() 
+
+    public void setValeurPossible(ArrayList<Valeur> valeurPossible)
+    {
+        this.valeurPossible = valeurPossible;
+    }
+
+    public ArrayList<Valeur> getValeurPossible()
     {
 		return this.valeurPossible;
 	}
