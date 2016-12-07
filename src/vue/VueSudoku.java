@@ -96,7 +96,7 @@ public class VueSudoku
                                                    } 
                                                    else
                                                    {
-                                                       valeur[i][j].setText(Integer.toString(matrice[x].getCaseValueFromLine(y++)));
+                                                       valeur[i][j].setText(Integer.toString(matrice[x].getValeurCaseColonneDonnee(y++)));
                                                        valeur[i][j].setEditable(false);
                                                        if (activeVueConflit)
                                                            switch (estEnConflit[i][j]){
