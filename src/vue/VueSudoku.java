@@ -29,7 +29,6 @@ import modele.SudokuParameters;
 
 public class VueSudoku
 {
-
     private Jeu modeleJeu;
     private ControleurSudoku controleurSudoku;
     private Scene scene;
@@ -56,6 +55,7 @@ public class VueSudoku
                                        {
                                            String save;
                                            boolean aucuneCaseVide = true;
+                                           boolean aucunConflit = true;
                                            int x = 0;
                                            int y = 0;
                                            Groupe matrice[] = modeleJeu.getNombreDeLignes();
@@ -68,6 +68,8 @@ public class VueSudoku
                                                    // Si la case est de type nonBloqué, alors on remplie le tableau
                                                    if (estBloque[0][i][j] == 1)
                                                    {
+                                                       if (estEnConflit[i][j] != 0)
+                                                           aucunConflit = false;
                                                        valeur[i][j].setText(Integer.toString(matrice[x].getValeurCaseColonneDonnee(y++)));
                                                        if (valeur[i][j].getText().compareTo("0") == 0) {
                                                            valeur[i][j].setText("");
@@ -124,7 +126,7 @@ public class VueSudoku
                                                    x++;
                                                }
                                            }
-                                           if (aucuneCaseVide)
+                                           if (aucuneCaseVide && aucunConflit)
                                            {
                                                modeleJeu.setSudokuResolu(true);
                                                Alert boxAlert = new Alert(Alert.AlertType.INFORMATION);
