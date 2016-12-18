@@ -139,8 +139,6 @@ public class VueSudoku
                                                Optional<ButtonType> choice	= boxAlert.showAndWait();
 
                                                if (choice.get() == oui)
-                                                   System.exit(0);
-                                               else
                                                    boxAlert.close();
 
                                            }
